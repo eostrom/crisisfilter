@@ -21,7 +21,7 @@ class ReportsController < ApplicationController
   def destroy
     respond_to do |format|
       if @report.destroy
-        flash[:notice] = 'Report was successfully destroyed.'        
+        flash[:notice] = 'Report was successfully destroyed.'
         format.html { redirect_to reports_path }
         format.xml  { head :ok }
       else
