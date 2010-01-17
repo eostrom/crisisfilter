@@ -72,11 +72,11 @@ class ReportsController < ApplicationController
   end
 
   def update_database
-    num_records = get_update( "query.yahooapis.com", "/v1/public/yql", { 
-                                "q"  => "select * from twitter.search where q='#haiti #need -RT -rt';",
-                                "format" => "xml",
-                                "env" => "store://datatables.org/alltableswithkeys" }
-                              )
+    num_records = ReportsHelper::get_update( "query.yahooapis.com", "/v1/public/yql", { 
+                                               "q"  => "select * from twitter.search where q='#haiti #need -RT -rt';",
+                                               "format" => "xml",
+                                               "env" => "store://datatables.org/alltableswithkeys" }
+                                             )
     
     render :text => "update complete, updated #{num_records}", :layout => nil
   end
