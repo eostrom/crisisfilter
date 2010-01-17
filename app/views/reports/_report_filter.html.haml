@@ -1,0 +1,8 @@
+- report = report_filter
+- content_tag_for :tr, report do
+  %td
+    =h "@#{report.user}"
+  %td
+    =h report.content
+  %td.votes
+    = report.votes if report.votes && report.votes > 0

@@ -10,5 +10,5 @@ h1 {
   text-align: left;
   margin: auto; }
 
-.button-to {
-  display: inline; }
+.votes {
+  text-align: right; }
