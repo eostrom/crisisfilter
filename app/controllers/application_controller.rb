@@ -7,4 +7,8 @@ class ApplicationController < ActionController::Base
 
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
+
+  def build_time_from_params(field_name, params)
+    Time.utc(*(1..5).map {|part| params["#{field_name}(#{part}i)"]})
+  end
 end

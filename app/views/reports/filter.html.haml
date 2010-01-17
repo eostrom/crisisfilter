@@ -1,4 +1,11 @@
 %h2 The Filter
+- form_for @search do |f|
+  %div
+    = f.datetime_select(:created_at_gte)
+  %div
+    = f.datetime_select(:created_at_lt)
+  = submit_tag 'Update'
+
 - if !@reports.empty?
   .reports
     %table
@@ -9,4 +16,4 @@
       = render :partial => "report_filter", :collection => @reports
   = will_paginate(@reports)
 - else
-  %p There are no reports to show yet.
+  %p There are no reports from this time range.
