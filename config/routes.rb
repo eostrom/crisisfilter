@@ -3,6 +3,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :reports, {
     :collection => {
+      :filter => :get,
       :refresh => :post
     }, :member => {
       :vote => :put

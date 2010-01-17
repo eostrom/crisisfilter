@@ -46,6 +46,15 @@ class ReportsController < ApplicationController
     end
   end
 
+  def filter
+    params[:search] ||= {}
+    params[:search][:descend_by_votes] ||= true
+    params[:search][:created_at_gt] ||= 1.hour.ago
+
+    @search = Report.search(params[:search])
+    @reports = @search.paginate(:page => params[:page])
+  end
+
   def edit
   end
 
