@@ -9,3 +9,6 @@ h1 {
   width: 800px;
   text-align: left;
   margin: auto; }
+
+.button-to {
+  display: inline; }
