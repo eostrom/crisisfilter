@@ -1,0 +1,55 @@
+<h1>New report</h1>
+
+<% form_for(@report) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :note_record_id %><br />
+    <%= f.text_field :note_record_id %>
+  </p>
+  <p>
+    <%= f.label :entry_date %><br />
+    <%= f.text_field :entry_date %>
+  </p>
+  <p>
+    <%= f.label :author_name %><br />
+    <%= f.text_field :author_name %>
+  </p>
+  <p>
+    <%= f.label :author_email %><br />
+    <%= f.text_field :author_email %>
+  </p>
+  <p>
+    <%= f.label :author_phone %><br />
+    <%= f.text_field :author_phone %>
+  </p>
+  <p>
+    <%= f.label :source_date %><br />
+    <%= f.date_select :source_date %>
+  </p>
+  <p>
+    <%= f.label :found %><br />
+    <%= f.check_box :found %>
+  </p>
+  <p>
+    <%= f.label :email_of_found %><br />
+    <%= f.text_field :email_of_found %>
+  </p>
+  <p>
+    <%= f.label :phone_of_found %><br />
+    <%= f.text_field :phone_of_found %>
+  </p>
+  <p>
+    <%= f.label :laset_known_location %><br />
+    <%= f.text_field :laset_known_location %>
+  </p>
+  <p>
+    <%= f.label :text %><br />
+    <%= f.text_field :text %>
+  </p>
+  <p>
+    <%= f.submit "Create" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', reports_path %>
