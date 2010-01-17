@@ -10,7 +10,7 @@ one:
   found: false
   email_of_found: MyString
   phone_of_found: MyString
-  laset_known_location: MyString
+  last_known_location: MyString
   text: MyString
 
 two:
@@ -23,5 +23,5 @@ two:
   found: false
   email_of_found: MyString
   phone_of_found: MyString
-  laset_known_location: MyString
+  last_known_location: MyString
   text: MyString

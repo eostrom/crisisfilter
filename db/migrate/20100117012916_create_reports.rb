@@ -10,7 +10,7 @@ class CreateReports < ActiveRecord::Migration
       t.boolean :found
       t.string :email_of_found
       t.string :phone_of_found
-      t.string :laset_known_location
+      t.string :last_known_location
       t.string :text
 
       t.timestamps
