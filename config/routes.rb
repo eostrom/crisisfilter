@@ -1,7 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :reports, {
     :collection => {
-      :update_database => :any
+      :refresh => :post
     }
   }
 

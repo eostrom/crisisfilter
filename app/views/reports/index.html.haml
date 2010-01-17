@@ -5,4 +5,4 @@
   = will_paginate(@reports)
 - else
   %p There are no reports to show yet.
-= link_to 'New report', new_report_path
+= button_to 'Get New Tweets', refresh_reports_path, :method => :post
