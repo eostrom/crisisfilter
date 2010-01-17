@@ -2,6 +2,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :reports, {
     :collection => {
       :refresh => :post
+    }, :member => {
+      :vote => :put
     }
   }
 

@@ -1,7 +1,13 @@
 %h2 Listing reports
 - if !@reports.empty?
   .reports
-    = render :partial => "report", :collection => @reports
+    %table
+      %tr
+        %th User
+        %th Message
+        %th Lives at stake?
+        %th &nbsp;
+      = render :partial => "report", :collection => @reports
   = will_paginate(@reports)
 - else
   %p There are no reports to show yet.

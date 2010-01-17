@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(:version => 20100117025228) do
     t.string   "content"
     t.float    "latitude"
     t.float    "longitude"
-    t.integer  "votes"
+    t.integer  "votes",      :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "user"

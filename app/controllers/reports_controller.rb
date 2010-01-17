@@ -71,6 +71,12 @@ class ReportsController < ApplicationController
     end
   end
 
+  def vote
+    @report.increment!(:votes)
+    flash[:notice] = "voted: #{@report.content}"
+    redirect_to reports_path
+  end
+
   def refresh
     num_records = Report.get_update( "query.yahooapis.com", "/v1/public/yql", {
                                                "q"  => "select * from twitter.search where q='#haiti #need -RT -rt';",
