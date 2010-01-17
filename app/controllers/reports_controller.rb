@@ -61,6 +61,8 @@ class ReportsController < ApplicationController
 
     params[:search][:created_at_gte] ||= 1.hour.ago
     params[:search][:descend_by_votes] ||= true
+
+    logger.debug("SEARCH #{params[:search].inspect}")
     @search = Report.search(params[:search])
     @reports = @search.paginate(:page => params[:page])
   end
