@@ -1,2 +1,31 @@
 class Report < ActiveRecord::Base
+  def self.get_update( host, path, params )
+    query_string = params.map do |k,v|
+      "#{k}=#{CGI::escape( v )}"
+    end.join("&")
+
+    http = Net::HTTP.new( host )
+
+    headers, body = http.get( "#{path}?#{query_string}" )
+    if ( headers.code == "200" )
+      parse_requests( body )
+    else
+      RAILS_DEFAULT_LOGGER.error "Unable to fetch request #{headers.code} / #{headers.message}"
+    end
+  end
+
+protected
+
+  def self.parse_requests( xml_text )
+    doc = Hpricot.parse( xml_text )
+    (doc/:query/:results).each_with_index do |result, count|
+      report = Report.new()
+
+      report.content = result.at("text").inner_text
+      report.provenance = "twitter"
+      report.yql_id = result.at("id").inner_text
+      report.save
+    end
+    count
+  end
 end
