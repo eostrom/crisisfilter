@@ -1,7 +1,9 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :reports
-
-  map.resources :reports
+  map.resources :reports, {
+    :collection => {
+      :update_database => :any
+    }
+  }
 
   # The priority is based upon order of creation: first created -> highest priority.
 

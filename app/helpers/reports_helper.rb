@@ -4,7 +4,9 @@ require "rubygems"
 require "hpricot"
 
 module ReportsHelper
-  def parse_requests( xml_text )
+  # TODO: these don't really belong in a helper
+
+  def self.parse_requests( xml_text )
     doc = Hpricot.parse( xml_text )
     (doc/:query/:results).each do |result|
       report = Report.new()
@@ -16,11 +18,11 @@ module ReportsHelper
     end
   end
 
-  def get_update( host, path, params )
+  def self.get_update( host, path, params )
     query_string = params.map do |k,v|
       "#{k}=#{CGI::escape( v )}"
     end.join("&")
-    
+
     http = Net::HTTP.new( host )
 
     puts "#{path}?#{query_string}"
