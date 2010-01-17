@@ -5,5 +5,5 @@
     =h report.content
   %td
     = button_to 'Yes', vote_report_path(report), :method => :put
-  %td
+  %td.votes
     = report.votes if report.votes && report.votes > 0
