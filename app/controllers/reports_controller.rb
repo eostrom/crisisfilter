@@ -33,7 +33,13 @@ class ReportsController < ApplicationController
   end
 
   def index
-    @reports = Report.paginate(:page => params[:page], :per_page => REPORTS_PER_PAGE)
+    refreshed = Report.refresh_if_needed
+    flash.now[:refresh] = "#{refreshed} new tweets" if refreshed
+
+    @reports = Report.paginate(
+      :order => 'created_at DESC',
+      :page => params[:page], :per_page => REPORTS_PER_PAGE)
+
     respond_to do |format|
       format.html
       format.xml  { render :xml => @reports }

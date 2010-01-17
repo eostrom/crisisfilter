@@ -1,5 +1,20 @@
 class Report < ActiveRecord::Base
-  def self.get_update( host, path, params )
+  named_scope :the_latest, :order => 'created_at DESC', :limit => 1
+
+  def self.refresh_if_needed
+    return if Time.now - the_latest.first.created_at < 20.seconds
+
+    refresh("query.yahooapis.com", "/v1/public/yql",
+      {
+        "q"  => "select * from twitter.search where q='#haiti #need -RT -rt';",
+        "format" => "xml",
+        "env" => "store://datatables.org/alltableswithkeys"
+      })
+  end
+
+protected
+
+  def self.refresh( host, path, params )
     query_string = params.map do |k,v|
       "#{k}=#{CGI::escape( v )}"
     end.join("&")
@@ -13,8 +28,6 @@ class Report < ActiveRecord::Base
       RAILS_DEFAULT_LOGGER.error "Unable to fetch request #{headers.code} / #{headers.message}"
     end
   end
-
-protected
 
   def self.parse_requests( xml_text )
     doc = Hpricot.parse( xml_text )
