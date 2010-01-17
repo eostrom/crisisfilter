@@ -60,6 +60,10 @@ class ReportsController < ApplicationController
     end
 
     params[:search][:created_at_gte] ||= 1.hour.ago
+    [:created_at_gte, :created_at_lt].each do |field_name|
+      params[:search][field_name] = params[:search][field_name].to_datetime
+    end
+
     params[:search][:descend_by_votes] ||= true
 
     logger.error("SEARCH #{params[:search].inspect}")
