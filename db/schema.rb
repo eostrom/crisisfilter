@@ -12,17 +12,12 @@
 ActiveRecord::Schema.define(:version => 20100117012916) do
 
   create_table "reports", :force => true do |t|
-    t.string   "note_record_id"
-    t.string   "entry_date"
-    t.string   "author_name"
-    t.string   "author_email"
-    t.string   "author_phone"
-    t.date     "source_date"
-    t.boolean  "found"
-    t.string   "email_of_found"
-    t.string   "phone_of_found"
-    t.string   "last_known_location"
-    t.string   "text"
+    t.string   "yql_id"
+    t.string   "provenance"
+    t.string   "content"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.integer  "votes"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

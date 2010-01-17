@@ -1,0 +1,28 @@
+- form_for(report) do |f|
+  = f.error_messages
+  %p
+    = f.label :yql_id
+    %br
+    = f.text_field :yql_id
+  %p
+    = f.label :provenance
+    %br
+    = f.text_field :provenance
+  %p
+    = f.label :content
+    %br
+    = f.text_field :content
+  %p
+    = f.label :latitude
+    %br
+    = f.text_field :latitude
+  %p
+    = f.label :longitude
+    %br
+    = f.text_field :longitude
+  %p
+    = f.label :votes
+    %br
+    = f.text_field :votes
+  %p
+    = f.submit "Submit"

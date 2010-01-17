@@ -1,0 +1,24 @@
+%h2= "Report \"#{@report.to_param}\""
+- content_tag_for :div, @report do
+  %ul
+    %li
+      %strong Yql:
+      =h @report.yql_id
+    %li
+      %strong Provenance:
+      =h @report.provenance
+    %li
+      %strong Content:
+      =h @report.content
+    %li
+      %strong Latitude:
+      =h @report.latitude
+    %li
+      %strong Longitude:
+      =h @report.longitude
+    %li
+      %strong Votes:
+      =h @report.votes
+%ul
+  %li= link_to 'Edit', edit_report_path(@report)
+  %li= link_to 'Back', reports_path

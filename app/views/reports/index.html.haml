@@ -1,0 +1,8 @@
+%h2 Listing reports
+- if !@reports.empty?
+  .reports
+    = render :partial => "report", :collection => @reports
+  = will_paginate(@reports)
+- else
+  %p There are no reports to show yet.
+= link_to 'New report', new_report_path

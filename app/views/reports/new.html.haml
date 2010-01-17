@@ -1,0 +1,4 @@
+%h2 New report
+= render :partial => "form", :locals => {:report => @report}
+%ul
+  %li= link_to 'Back', reports_path
