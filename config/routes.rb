@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.root :controller => 'reports'
+
   map.resources :reports, {
     :collection => {
       :refresh => :post
