@@ -11,8 +11,6 @@
 
 See doc/crisisfilter2.jpg.
 
-![Mockup](doc/crisisfilter2.jpg)
-
 ## TODO (in no particular order)
 
 * make the front page look nicer
