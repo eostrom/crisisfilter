@@ -13,11 +13,19 @@ See doc/crisisfilter2.jpg.
 
 ## TODO (in no particular order)
 
-* make the front page look nicer
-* make the filter page look nicer
-* make the filter page more useful/usable
-* make sure we catch all tweets
-* make sure interaction is speedy
-  * we store tweets indefinitely, which will eventually slow us down
-  * we fetch tweets from Twitter in a user thread
-  * other problems, no doubt
+* twitter import
+  * make sure we catch all tweets
+  * improve geolocation and grab username (Anselm)
+* firehose page
+  * hotoronot one-at-a-time UI
+  * can we link back to twitter for the username and/or individual tweet?
+* filter page
+  * "mark as handled" form and storage
+  * sort by report count or date on filter page (currently it's report count)
+  * make time frames / minimum reports work on filter page
+* general
+  * fix sidebar links
+  * move to crisisfilter.org, or at least crisisfilter.heroku.com
+  * performance
+    * don't store all tweets forever
+    * don't fetch tweets from Twitter in a user thread
