@@ -1,19 +1,54 @@
-%h2 The Filter
-- form_for @search do |f|
-  %div
-    = f.datetime_select(:created_at_gte)
-  %div
-    = f.datetime_select(:created_at_lt)
-  = submit_tag 'Update'
+- @title = 'View Crises'
 
-- if !@reports.empty?
-  .reports
-    %table
-      %tr
-        %th User
-        %th Message
-        %th Votes
-      = render :partial => "report_filter", :collection => @reports
-  = will_paginate(@reports)
-- else
-  %p There are no reports from this time range.
+- content_for :javascript do
+  %script{ :type => "text/javascript", :src => "http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js" }
+  %link{ :href => "./fancybox/jquery.fancybox-1.2.6.css", :rel => "stylesheet", :type => "text/css", :media => "screen" }
+  %script{ :type => "text/javascript", :src => "./fancybox/jquery.fancybox-1.2.6.pack.js" }
+  %link{ :href => "./fancybox/jquery.fancybox-1.2.6.css", :rel => "stylesheet", :type => "text/css", :media => "screen" }
+  %script{ :type => "text/javascript" }
+    /
+      $(document).ready(function() {
+      $(".handled a").fancybox({
+      'hideOnContentClick': false,
+      });
+      });
+  /
+    Date: 2010-01-18
+
+- content_for :header_text do
+  %strong
+    Reported crises.
+  %br
+  Please alert volunteers or enter into
+  = succeed '.' do
+    %a{ :href => "http://haiti.ushahidi.com", :target => "_blank" }<
+      haiti.ushahidi.com
+
+#filter
+  %form
+    %ul
+      %li
+        %select{ :name => "timeframe" }
+          %option{ :selected => "selected", :value => "#" }
+            Last hour
+          %option{ :value => "#" }
+            This afternoon (evening/morning)
+          %option{ :value => "#" }
+            Today
+          %option{ :value => "#" }
+            Yesterday
+          %option{ :value => "#" }
+            This week
+          %optino{ :value => "#" }
+            Last week
+        %br
+        Timeframe
+      %li
+        %input#minimum{ :name => "minimum", :size => "6", :type => "text", :value => "" }
+        %br
+        Minimum Reports
+    %input#submit{ :name => "submit", :type => "image", :src => "/images/btn_filter_results.gif", :value => "" }
+#sorting
+  %a{ :href => "#" }
+    Sort by report count
+= render :partial => 'report_filter', :collection => @reports

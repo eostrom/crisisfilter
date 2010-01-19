@@ -2,15 +2,23 @@
 !!!
 %html{ :'xml:lang' => "en", :lang => "en" }
   %head
-    %title= "#{controller.class.to_s}: #{controller.action_name}"
+    %title= "CrisisFilter.org | #{@title} | One click could save a life"
     %meta{ :"http-equiv" => "Content-Type", :content => "text/html; charset=utf-8" }
     %link{ :rel => "shortcut icon", :href => "/favicon.ico" }
     = stylesheet_link_tag "application", :media => "screen"
     = javascript_include_tag :defaults
+    = yield(:javascript)
   %body
-    #wrapper
-      #content
-        %h1 Haitistream
+    #container
+      #header
+        %ul#nav
+          %li
+            = link_to 'Locate Crises', reports_path, :class => ('selected' if request[:action] == 'index')
+          %li
+            = link_to 'View Crises', filter_reports_path, :class => ('selected' if request[:action] == 'filter')
+        %a#logo{ :href => "index.html" }
+          %img{ :src => "/images/logo.gif", :alt => "CrisisFilter.org - One click could save a life." }
+        %h1= yield(:header_text)
         #flash
           - unless flash.empty?
             = content_tag :div, flash[:notice],  :class => "notice"  if flash[:notice]
@@ -19,4 +27,28 @@
             = content_tag :div, flash[:error],   :class => "error"   if flash[:error]
           :javascript
             #{visual_effect :highlight, "flash"}
+      #content
         = yield
+      #sidebar
+        %h2
+          Why this site?
+        %p
+          This site was built to separate the vital requests for urgent help from the other posts about the term "haiti". The volume of data on this tip is so large that it takes an army of people to go through it and locate these vital posts.
+        %h2
+          Links
+        %p
+          %a{ :href => "#" }
+            Donate (Red Cross)
+          %br
+          %a{ :href => "#" }
+            haiti.ushahidi.com
+          %br
+          %a{ :href => "#" }
+            Crisis Maps
+          %br
+          %a{ :href => "#" }
+            RHOK
+      #footer
+        \&copy; 2010 crisisfilter.org.
+        %a{ :href => "#" }
+          Sample Link

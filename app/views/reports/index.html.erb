@@ -1,0 +1,9 @@
+<% @title = 'Locate Crises' %>
+
+<% content_for :header_text do %>
+  Earthquake victims in Haiti are reaching out for help through social media.
+  Help get <strong>vital situations</strong> reported to the
+  <strong>right people</strong>.
+<% end %>
+
+<%= render :partial => 'report', :collection => @reports %>

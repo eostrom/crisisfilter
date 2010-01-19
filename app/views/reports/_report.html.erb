@@ -1,0 +1,14 @@
+<div class="update">
+  <div class="actions">
+    <% form_tag(vote_report_path(report), :method => :put) do %>
+      <%= image_submit_tag('btn_report_crisis.gif') %>
+    <% end %>
+    <div class="notacrisis">
+      <%= link_to 'Not a crisis', '#' %>
+    </div>
+  </div>
+
+  <%= link_to "@#{report.user}", '#', :class => 'username' %>
+  <%= h(report.content) %>
+  <div class="timestamp"><%= report.created_at %></div>
+</div>

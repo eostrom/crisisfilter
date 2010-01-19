@@ -1,8 +1,16 @@
 - report = report_filter
-- content_tag_for :tr, report do
-  %td
+
+.update
+  .reports_count
+    %span.num
+      = report.votes
+    %br
+    = report.votes == 1 ? 'report' : 'reports'
+    .handled
+      %a{ :href => "./form.html" }
+        Mark as handled...
+  %a.username{ :href => "#" }
     =h "@#{report.user}"
-  %td
-    =h report.content
-  %td.votes
-    = report.votes if report.votes && report.votes > 0
+  =h report.content
+  .timestamp
+    = report.created_at

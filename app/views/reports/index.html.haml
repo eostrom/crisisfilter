@@ -1,14 +1,11 @@
-%h2 The Firehose
-- if !@reports.empty?
-  .reports
-    %table
-      %tr
-        %th User
-        %th Message
-        %th Lives at stake?
-        %th &nbsp;
-      = render :partial => "report", :collection => @reports
-  = will_paginate(@reports)
-- else
-  %p There are no reports to show yet.
-= button_to 'Get New Tweets', refresh_reports_path, :method => :post
+- @title = 'Locate Crises'
+
+- content_for :header_text do
+  Earthquake victims in Haiti are reaching out for help through social media.
+  Help get
+  %strong
+    vital situations
+  reported to the
+  <strong>right people</strong>.
+
+= render :partial => 'report', :collection => @reports

@@ -1,9 +1,11 @@
-- content_tag_for :tr, report do
-  %td
-    =h "@#{report.user}"
-  %td
-    =h report.content
-  %td
-    = button_to 'Yes', vote_report_path(report), :method => :put
-  %td.votes
-    = report.votes if report.votes && report.votes > 0
+.update
+  .actions
+    - form_tag(vote_report_path(report), :method => :put) do
+      = image_submit_tag('btn_report_crisis.gif')
+    .notacrisis
+      = link_to 'Not a crisis', '#'
+
+  = link_to "@#{report.user}", '#', :class => 'username'
+  = h(report.content)
+  .timestamp
+    = report.created_at
