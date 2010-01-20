@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100117045019) do
+ActiveRecord::Schema.define(:version => 20100119045019) do
 
   create_table "reports", :force => true do |t|
     t.string   "yql_id"
@@ -17,10 +17,13 @@ ActiveRecord::Schema.define(:version => 20100117045019) do
     t.string   "content"
     t.float    "latitude"
     t.float    "longitude"
-    t.integer  "votes",      :default => 0
+    t.integer  "votes",                  :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "user"
+    t.string   "user_profile_image_url"
+    t.string   "user_provenance_key"
+    t.string   "user_homepage_url"
   end
 
 end

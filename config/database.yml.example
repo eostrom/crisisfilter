@@ -1,0 +1,18 @@
+development:
+  adapter: postgresql
+  database: crisisfilter_development
+  username: crisisfilter_development
+  password: crisisfilter_development
+
+production:
+  adapter: postgresql
+  database: crisisfilter
+  username: crisisfilter
+  password: crisisfilter
+
+test:
+  adapter: postgresql
+  database: crisisfilter_test
+  username: crisisfilter_test
+  password: crisisfilter_test
+

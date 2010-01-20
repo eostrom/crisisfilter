@@ -4,6 +4,7 @@ require "rubygems"
 require "hpricot"
 
 module ReportsHelper
+
   def select_timeframe(form)
     form.select :timeframe, [
       [ 'the last hour', 'hour' ],
@@ -13,4 +14,17 @@ module ReportsHelper
       [ 'last week', 'week_1' ]
     ]
   end
+
+  def format_status_message(content)
+    content.split(' ').collect { |term|
+      case term[0..0]
+      when '#'
+          "<a href='http://search.twitter.com/search?q=%23#{term[1..-1]}'>#{term}</a>"
+      when "@"
+         "<a href='http://twitter.com/#{term[1..-1]}'>#{term}</a>"
+      else term
+      end
+    }.join(' ')
+  end
+
 end

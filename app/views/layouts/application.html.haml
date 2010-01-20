@@ -16,7 +16,7 @@
             = link_to 'Locate Crises', reports_path, :class => ('selected' if request[:action] == 'index')
           %li
             = link_to 'View Crises', filter_reports_path, :class => ('selected' if request[:action] == 'filter')
-        %a#logo{ :href => "index.html" }
+        %a#logo{ :href => "/" }
           %img{ :src => "/images/logo.gif", :alt => "CrisisFilter.org - One click could save a life." }
         %h1= yield(:header_text)
         #flash
