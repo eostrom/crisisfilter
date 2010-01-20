@@ -21,7 +21,7 @@ class Report < ActiveRecord::Base
   def self.refresh_if_needed
     # If tweets slow down but use of our app doesn't, this will
     # result in a lot of extra hits to the Twitter feed.
-    return if Time.now - the_latest.first.created_at < 20.seconds
+    return if Time.now - calculate(:max, :created_at) < 20.seconds
 
     refresh("query.yahooapis.com", "/v1/public/yql",
       {
