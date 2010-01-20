@@ -233,6 +233,12 @@ body {
     text-decoration: none;
 }
 
+#sidebar ul, #sidebar li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
 #footer {
     clear: both;
     padding: 40px 0;
