@@ -56,6 +56,15 @@ protected
       report.content = result.at("text").inner_text
       report.provenance = "twitter"
       report.yql_id = result.at("id").inner_text
+      report.user_profile_image_url = result.at("profile_image_url").inner_text
+      report.user = result.at("from_user").inner_text
+
+      # TODO this is a bad idea to hardcode - the next crisis will not need this
+      # skip aggregators for now!
+      next if report.user == "haiti_tweets"
+      next if report.user == "haititweets"
+      next if report.user == "haititweaks"
+
       report.save
     end
     count
