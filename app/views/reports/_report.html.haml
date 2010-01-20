@@ -5,7 +5,8 @@
     .notacrisis
       = link_to 'Not a crisis', '#'
 
-  = link_to "@#{report.user}", '#', :class => 'username'
+  %img{:src => report.user_profile_image_url, :style => "overflow:auto;" }
+  = link_to "@#{report.user}", 'http://twitter.com/#{report.user}', :class => 'username'
   = report.formatted_output
   .timestamp
     = report.created_at
