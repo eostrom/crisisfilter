@@ -25,29 +25,13 @@
       haiti.ushahidi.com
 
 #filter
-  %form
-    %ul
-      %li
-        %select{ :name => "timeframe" }
-          %option{ :selected => "selected", :value => "#" }
-            Last hour
-          %option{ :value => "#" }
-            This afternoon (evening/morning)
-          %option{ :value => "#" }
-            Today
-          %option{ :value => "#" }
-            Yesterday
-          %option{ :value => "#" }
-            This week
-          %optino{ :value => "#" }
-            Last week
-        %br
-        Timeframe
-      %li
-        %input#minimum{ :name => "minimum", :size => "6", :type => "text", :value => "" }
-        %br
-        Minimum Reports
-    %input#submit{ :name => "submit", :type => "image", :src => "/images/btn_filter_results.gif", :value => "" }
+  - form_for @search do |f|
+    Tweets from
+    = select_timeframe(f)
+    with at least
+    = f.text_field :votes_gte
+    vote(s).
+    = image_submit_tag 'btn_filter_results.gif'
 #sorting
   %a{ :href => "#" }
     Sort by report count

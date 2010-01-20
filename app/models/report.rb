@@ -1,6 +1,23 @@
 class Report < ActiveRecord::Base
   named_scope :the_latest, :order => 'created_at DESC', :limit => 1
 
+  named_scope :timeframe, lambda { |timeframe|
+    unit, count = timeframe.split('_')
+    unit_in_seconds = 1.send(unit)
+
+    if count
+      # FIXME: broken for hour
+      start_time = (Time.now.send("beginning_of_#{unit}") -
+        count.to_i * unit_in_seconds)
+      end_time = start_time + unit_in_seconds
+    else
+      start_time = Time.now - unit_in_seconds
+      end_time = Time.now
+    end
+
+    { :conditions => ['created_at BETWEEN ? AND ?', start_time, end_time] }
+  }
+
   def self.refresh_if_needed
     # If tweets slow down but use of our app doesn't, this will
     # result in a lot of extra hits to the Twitter feed.

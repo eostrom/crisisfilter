@@ -49,26 +49,10 @@ class ReportsController < ApplicationController
   def filter
     params[:search] ||= {}
 
-    [:created_at_gte, :created_at_lt].each do |field_name|
-      if params[:search]["#{field_name}(1i)"]
-        params[:search][field_name] =
-          build_time_from_params(field_name, params[:search])
-        (1..5).each do |part|
-          params[:search].delete("#{field_name}(#{part}i)")
-        end
-      end
-    end
+    params[:search][:order] ||= :descend_by_votes
+    params[:search][:timeframe] ||= 'hour'
+    params[:search][:votes_gte] ||= 1
 
-    params[:search][:created_at_gte] ||= 1.hour.ago
-    [:created_at_gte, :created_at_lt].each do |field|
-      if params[:search][field]
-        params[:search][field] = params[:search][field].to_datetime
-      end
-    end
-
-    params[:search][:descend_by_votes] ||= true
-
-    logger.error("SEARCH #{params[:search].inspect}")
     @search = Report.search(params[:search])
     @reports = @search.paginate(:page => params[:page])
   end
