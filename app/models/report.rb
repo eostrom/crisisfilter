@@ -1,4 +1,7 @@
 class Report < ActiveRecord::Base
+
+  attr_accessor :formatted_output
+
   named_scope :the_latest, :order => 'created_at DESC', :limit => 1
 
   named_scope :timeframe, lambda { |timeframe|
