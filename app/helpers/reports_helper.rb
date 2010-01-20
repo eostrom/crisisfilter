@@ -10,7 +10,7 @@ module ReportsHelper
       [ 'today', 'day_0' ],
       [ 'yesterday', 'day_1' ],
       [ 'this week', 'week_0' ],
-      [ 'last_week', 'week_1' ]
+      [ 'last week', 'week_1' ]
     ]
   end
 end
