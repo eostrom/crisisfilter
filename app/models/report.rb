@@ -26,7 +26,7 @@ class Report < ActiveRecord::Base
     # result in a lot of extra hits to the Twitter feed.
     return if Time.now - calculate(:max, :created_at) < 20.seconds
 
-    stopwords = %w(RT rt crisiscamppdx via haiti_tweets).map {|word| "-#{word}"}.join(' ')
+    stopwords = %w(RT rt crisiscamppdx haiti_tweets).map {|word| "-#{word}"}.join(' ')
 
     refresh("query.yahooapis.com", "/v1/public/yql",
       {
@@ -62,6 +62,8 @@ protected
       next if exists?(:yql_id => report.yql_id)
 
       report.content = result.at("text").inner_text
+      next if report.content =~ /via @/i
+
       report.provenance = "twitter"
       report.user_profile_image_url = result.at("profile_image_url").inner_text
       report.user = result.at("from_user").inner_text
