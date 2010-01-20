@@ -30,7 +30,7 @@ class Report < ActiveRecord::Base
 
     refresh("query.yahooapis.com", "/v1/public/yql",
       {
-        "q"  => "select * from twitter.search where q='#haiti #need #{stopwords}';",
+        "q"  => "select * from twitter.search where q='haiti #{stopwords}';",
         "format" => "xml",
         "env" => "store://datatables.org/alltableswithkeys"
       })
