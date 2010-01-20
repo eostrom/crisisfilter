@@ -6,6 +6,6 @@
       = link_to 'Not a crisis', '#'
 
   = link_to "@#{report.user}", '#', :class => 'username'
-  = h(report.content)
+  = report.formatted_output
   .timestamp
     = report.created_at
