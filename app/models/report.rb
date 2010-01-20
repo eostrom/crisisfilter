@@ -56,9 +56,11 @@ protected
     (doc/:query/:results).each_with_index do |result, count|
       report = Report.new()
 
+      report.yql_id = result.at("id").inner_text
+      next if exists?(:yql_id => report.yql_id)
+
       report.content = result.at("text").inner_text
       report.provenance = "twitter"
-      report.yql_id = result.at("id").inner_text
       report.user_profile_image_url = result.at("profile_image_url").inner_text
       report.user = result.at("from_user").inner_text
 
