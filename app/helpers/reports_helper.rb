@@ -22,6 +22,12 @@ module ReportsHelper
           "<a href='http://search.twitter.com/search?q=%23#{term[1..-1]}'>#{term}</a>"
       when "@"
          "<a href='http://twitter.com/#{term[1..-1]}'>#{term}</a>"
+      when "h" || "H"
+         if term[0..6].downcase == "http://" # inelegant!! TODO use regex
+           "<a href='#{term}'>#{term}</a>"
+         else
+           term
+         end
       else term
       end
     }.join(' ')
