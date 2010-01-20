@@ -26,9 +26,11 @@ class Report < ActiveRecord::Base
     # result in a lot of extra hits to the Twitter feed.
     return if Time.now - calculate(:max, :created_at) < 20.seconds
 
+    stopwords = %w(RT rt crisiscamppdx via haiti_tweets).map {|word| "-#{word}"}.join(' ')
+
     refresh("query.yahooapis.com", "/v1/public/yql",
       {
-        "q"  => "select * from twitter.search where q='#haiti #need -RT -rt';",
+        "q"  => "select * from twitter.search where q='#haiti #need #{stopwords}';",
         "format" => "xml",
         "env" => "store://datatables.org/alltableswithkeys"
       })
