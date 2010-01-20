@@ -7,6 +7,6 @@
 
   %img{:src => report.user_profile_image_url, :style => "overflow:auto;" }
   = link_to "@#{report.user}", 'http://twitter.com/#{report.user}', :class => 'username'
-  = report.formatted_output
+  = format_status_message report.content
   .timestamp
     = report.created_at

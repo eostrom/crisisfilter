@@ -40,19 +40,6 @@ class ReportsController < ApplicationController
       :order => 'created_at DESC',
       :page => params[:page], :per_page => REPORTS_PER_PAGE)
 
-    # apply some layout formatting to each of these - I had trouble this in haml ... anselm
-    @reports.each do |report|
-      report.formatted_output = report.content.split(' ').collect { |term|
-        case term[0..0]
-        when '#'
-            "<a href='http://search.twitter.com/search?q=%23#{term[1..-1]}'>#{term}</a>"
-        when "@"
-           "<a href='http://twitter.com/#{term[1..-1]}'>#{term}</a>"
-        else term
-        end
-      }.join(' ')
-    end
-
     respond_to do |format|
       format.html
       format.xml  { render :xml => @reports }
