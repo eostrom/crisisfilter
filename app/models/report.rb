@@ -34,6 +34,14 @@ class Report < ActiveRecord::Base
         "format" => "xml",
         "env" => "store://datatables.org/alltableswithkeys"
       })
+
+    refresh("query.yahooapis.com", "/v1/public/yql",
+      {
+        "q"  => "select * from twitter.search where q='#{stopwords}' and geocode='18.542980,-72.343102,50mi';",
+        "format" => "xml",
+        "env" => "store://datatables.org/alltableswithkeys"
+      })
+
   end
 
 protected
