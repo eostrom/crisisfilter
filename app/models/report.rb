@@ -24,7 +24,7 @@ class Report < ActiveRecord::Base
   def self.refresh_if_needed
     # If tweets slow down but use of our app doesn't, this will
     # result in a lot of extra hits to the Twitter feed.
-    return if Time.now - calculate(:max, :created_at) < 20.seconds
+    return unless calculate(:max, :created_at).nil? || Time.now - calculate(:max, :created_at) > 20.seconds
 
     stopwords = %w(RT rt crisiscamppdx haiti_tweets).map {|word| "-#{word}"}.join(' ')
 
