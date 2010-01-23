@@ -1,6 +1,25 @@
+=begin
+  create_table "reports", :force => true do |t|
+    t.string   "yql_id"
+    t.string   "provenance"
+    t.string   "content"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.integer  "votes",                  :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "user"
+    t.string   "user_profile_image_url"
+    t.string   "user_provenance_key"
+    t.string   "user_homepage_url"
+  end
+=end
+
 class Report < ActiveRecord::Base
 
   attr_accessor :formatted_output
+
+  simple_search :fields => [:content, :longitude, :latitude, :user]
 
   named_scope :the_latest, :order => 'created_at DESC', :limit => 1
 
