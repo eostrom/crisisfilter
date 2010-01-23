@@ -6,7 +6,8 @@ ActionController::Routing::Routes.draw do |map|
       :filter => :get,
       :refresh => :post
     }, :member => {
-      :vote => :put
+      :upvote => :put,
+      :downvote => :put
     }
   }
 

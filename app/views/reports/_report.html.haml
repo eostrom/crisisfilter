@@ -1,9 +1,10 @@
 .update
   .actions
-    - form_tag(vote_report_path(report), :method => :put) do
+    - form_tag(upvote_report_path(report), :method => :put) do
       = image_submit_tag('btn_report_crisis.gif')
     .notacrisis
-      = link_to 'Not a crisis', '#'
+      = link_to_remote('Not a crisis', :url=>downvote_report_path(report), :method => :put)
+      
 
   %img{:src => report.user_profile_image_url, :style => "overflow:auto;" }
   = link_to "@#{report.user}", "http://twitter.com/#{report.user}", :class => 'username'

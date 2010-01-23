@@ -49,9 +49,9 @@ class ReportsController < ApplicationController
   def filter
     params[:search] ||= {}
 
-    params[:search][:order] ||= :descend_by_votes
+    params[:search][:order] ||= :descend_by_upvotes # +++ should be diff up - down
     params[:search][:timeframe] ||= 'hour'
-    params[:search][:votes_gte] ||= 1
+    params[:search][:votes_gte] ||= 1 # ??? what's this?
 
     @search = Report.search(params[:search])
     @reports = @search.paginate(:page => params[:page])
@@ -88,9 +88,15 @@ class ReportsController < ApplicationController
     end
   end
 
-  def vote
-    @report.increment!(:votes)
-    flash[:notice] = "voted: #{@report.content}"
+  def upvote
+    @report.increment!(:upvotes)
+    flash[:notice] = "upvoted: #{@report.content}"
+    redirect_to reports_path
+  end
+
+  def downvote
+    @report.increment!(:downvotes)
+    flash[:notice] = "downvoted: #{@report.content}"
     redirect_to reports_path
   end
 
