@@ -65,11 +65,13 @@ protected
     doc = Hpricot.parse( xml_text )
     (doc/:query/:results).each_with_index do |result, count|
       report = Report.new()
-
+      
       report.yql_id = result.at("id").inner_text
       next if exists?(:yql_id => report.yql_id)
 
       report.content = result.at("text").inner_text
+      
+      # Remove retweets since obstensibly we already have the original tweet
       next if report.content =~ /via @/i
 
       report.provenance = "twitter"
@@ -81,6 +83,10 @@ protected
       next if report.user == "haiti_tweets"
       next if report.user == "haititweets"
       next if report.user == "haititweaks"
+
+      # Prevent duplicate messages
+      next if Report.exists?(:content => report.content)
+
 
       report.save
     end
