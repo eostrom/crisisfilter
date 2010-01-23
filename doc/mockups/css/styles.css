@@ -1,0 +1,249 @@
+body {
+    background: #ECEBE5;
+    font-family: Helvetica, Arial, sans-serif;
+    line-height: 1.4em;
+    color: #333;
+}
+
+#container {
+    width: 960px;
+    margin: 0 auto;
+}
+
+#header {
+    margin-top: 54px;
+}
+
+#header h1 {
+    padding-top: 40px;
+    font-size: 36px;
+    font-weight: normal;
+    color: #666;
+    line-height: 1.4em;
+    text-shadow: #FFF 0px 1px 0px;
+}
+
+#header h1 a {
+    text-decoration: none;
+    color: #555;
+}
+
+#header h1 a:hover {
+    color: #669966;
+}
+
+#header #logo img {
+    border: none;
+}
+
+#header #nav {
+    float: right;
+    margin: 0; padding: 0;
+}
+
+#header #nav li {
+    display: inline;
+}
+
+#header #nav li a {
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: bold;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    margin-left: 12px;
+    color: #666;
+    padding: 8px;
+    text-shadow: #FFF 0px 1px 0px;
+}
+
+#header #nav li a.selected, #header #nav li a:hover {
+    background-color: #669966;
+    color: #FFF;
+    text-shadow: #2A4E31 0px -1px 0px;
+}
+
+#content {
+    float: left;
+    width: 700px;
+    padding: 20px;
+    background: #FFF;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+}
+
+#content a {
+    color: #3DBBDE;
+    text-decoration: none;
+}
+
+#content a:hover {
+    text-decoration: underline;
+}
+
+#content #filter {
+    background: #E4EAE7;
+    padding: 20px;
+    margin-bottom: 20px;
+    font-size: 11px;
+    font-weight: bold;
+    font-color: #333;
+    overflow: hidden;
+    zoom: 1;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+}
+
+#content #filter ul {
+    margin: 0;
+    padding: 0;
+}
+
+#content #filter ul li {
+    float: left;
+    list-style: none;
+    margin:0 10px 0 0;
+}
+
+#content #filter ul li input {
+    border: none;
+    padding: 5px;
+    color: #333;
+    font-weight: bold;
+    font-size: 11px;
+    font-family: Helvetica, arial, sans-serif;
+}
+
+#content #filter input#submit {
+    float: right;
+}
+
+#content #sorting {
+    padding: 0px 0 20px 0;
+    font-size: 12px;
+    font-weight: bold;
+    border-bottom: 1px dotted #CCC;
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+#content .update {
+    color: #333;
+    padding: 20px 0;
+    border-bottom: 1px dashed #CCC;
+}
+
+#content .single {
+    font-size:24px; line-height: 1.4em; color: #666;
+}
+
+#content .update .actions {
+    float: right;
+    padding-left: 20px;
+    text-align: center;
+}
+
+#content .update .actions img {
+    border: none;
+}
+
+#content .update .actions div.notacrisis {
+    padding-top: 10px;
+}
+
+#content .update .actions div.notacrisis a {
+    color: #999999;
+    text-decoration: underline;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+#content .update .actions div.notacrisis a:hover {
+    text-decoration: none;
+}
+
+#content .update .actions .thankyou {
+    width: 128px;
+    text-decoration: none;
+    color: #006600;
+    font-weight: bold;
+}
+
+#content .update .reports_count {
+    float: right;
+    padding-left: 20px;
+    text-align: center;
+    color: #666666;
+}
+
+#content .update .reports_count .handled a {
+    color: #666;
+    font-size: 12px;
+    text-decoration: underline;
+}
+
+#content .update .reports_count .handled a:hover {
+    text-decoration: none;
+}
+
+#content .update .reports_count .num {
+    font-size: 24px;
+}
+
+#content .update .username {
+    font-weight: bold;
+}
+
+#content .update .timestamp {
+    font-family: Georgia, Times, serif;
+    color: #999;
+    font-size: 13px;
+    font-style: italic;
+}
+
+#content .first {
+    padding-top: 0;
+}
+
+#content .last {
+    border-bottom: none;
+}
+
+#sidebar {
+    margin-left: 770px;
+    color: #666;
+    font-size: 13px;
+}
+
+#sidebar h2 {
+    font-size: 13px;
+    color: #666;
+    margin: 15px 0 0px 0;
+}
+
+#sidebar p {
+    margin-top: 0px;
+}
+
+#sidebar p a {
+    color: #666;
+}
+
+#sidebar p a:hover {
+    text-decoration: none;
+}
+
+#footer {
+    clear: both;
+    padding: 40px 0;
+    color: #747371;
+    font-size: 13px;
+}
+
+#footer a {
+    color: #747371;
+}
+
+#footer a:hover {
+    text-decoration: none;
+}

@@ -1,0 +1,177 @@
+!!!
+%html{ :lang => "en" }
+  %head
+    %meta{ :content => "text/html; charset=utf-8", "http-equiv" => "Content-Type" }
+    %title
+      CrisisFilter.org | View Crises | One click could save a life
+    %meta{ :name => "generator", :content => "TextMate http://macromates.com/" }
+    %meta{ :name => "author", :content => "Ian Silber" }
+    %link{ :href => "css/styles.css", :title => "no title", :rel => "stylesheet", :type => "text/css", :media => "screen", :charset => "utf-8" }
+    %script{ :type => "text/javascript", :src => "http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js" }
+    %link{ :href => "./fancybox/jquery.fancybox-1.2.6.css", :rel => "stylesheet", :type => "text/css", :media => "screen" }
+    %script{ :type => "text/javascript", :src => "./fancybox/jquery.fancybox-1.2.6.pack.js" }
+    %link{ :href => "./fancybox/jquery.fancybox-1.2.6.css", :rel => "stylesheet", :type => "text/css", :media => "screen" }
+    %script{ :type => "text/javascript" }
+      /
+        $(document).ready(function() {
+        $(".handled a").fancybox({
+        'hideOnContentClick': false,
+        });
+        });
+    /
+      Date: 2010-01-18
+  %body
+    #container
+      #header
+        %ul#nav
+          %li
+            %a{ :href => "index.html" }
+              Locate Crises
+          %li
+            %a.selected{ :href => "view.html" }
+              View Crises
+        %a#logo{ :href => "index.html" }
+          %img{ :src => "images/logo.gif", :alt => "CrisisFilter.org - One click could save a life." }
+        %h1
+          %strong
+            Reported crises.
+          %br
+          Please alert volunteers or enter into
+          %a{ :href => "http://haiti.ushahidi.com", :target => "_blank" }
+            haiti.ushahidi.com
+          \.
+      #content
+        #filter
+          %form
+            %ul
+              %li
+                %select{ :name => "timeframe" }
+                  %option{ :selected => "selected", :value => "#" }
+                    Last hour
+                  %option{ :value => "#" }
+                    This afternoon (evening/morning)
+                  %option{ :value => "#" }
+                    Today
+                  %option{ :value => "#" }
+                    Yesterday
+                  %option{ :value => "#" }
+                    This week
+                  %optino{ :value => "#" }
+                    Last week
+                %br
+                Timeframe
+              %li
+                %input#minimum{ :name => "minimum", :size => "6", :type => "text", :value => "" }
+                %br
+                Minimum Reports
+            %input#submit{ :name => "submit", :type => "image", :src => "images/btn_filter_results.gif", :value => "" }
+        #sorting
+          %a{ :href => "#" }
+            Sort by report count
+        .update.first
+          .reports_count
+            %span.num
+              10
+            %br
+            reports
+            .handled
+              %a{ :href => "./form.html" }
+                Mark as handled...
+          %a.username{ :href => "#" }
+            joeblow
+          give money to Haiti now! I just donted $100 bucks. You should do the same because it's a great thing to do.
+          .timestamp
+            Jan 16th, 836pm PST
+        .update
+          .reports_count
+            %span.num
+              46
+            %br
+            reports
+            .handled
+              %a{ :href => "./form.html" }
+                Mark as handled...
+          %a.username{ :href => "#" }
+            joeblow
+          give money to Haiti now! I just donted $100 bucks. You should do the same because it's a great thing to do.
+          .timestamp
+            Jan 16th, 836pm PST
+        .update
+          .reports_count
+            %span.num
+              35
+            %br
+            reports
+            .handled
+              %a{ :href => "./form.html" }
+                Mark as handled...
+          %a.username{ :href => "#" }
+            joeblow
+          give money to Haiti now! I just donted $100 bucks. You should do the same because it's a great thing to do.
+          .timestamp
+            Jan 16th, 836pm PST
+        .update
+          .reports_count
+            %span.num
+              46
+            %br
+            reports
+            .handled
+              %a{ :href => "./form.html" }
+                Mark as handled...
+          %a.username{ :href => "#" }
+            joeblow
+          give money to Haiti now! I just donted $100 bucks. You should do the same because it's a great thing to do.
+          .timestamp
+            Jan 16th, 836pm PST
+        .update
+          .reports_count
+            %span.num
+              3
+            %br
+            reports
+            .handled
+              %a{ :href => "./form.html" }
+                Mark as handled...
+          %a.username{ :href => "#" }
+            joeblow
+          give money to Haiti now! I just donted $100 bucks. You should do the same because it's a great thing to do.
+          .timestamp
+            Jan 16th, 836pm PST
+        .update.last
+          .reports_count
+            %span.num
+              12
+            %br
+            reports
+            .handled
+              %a{ :href => "./form.html" }
+                Mark as handled...
+          %a.username{ :href => "#" }
+            joeblow
+          give money to Haiti now! I just donted $100 bucks. You should do the same because it's a great thing to do.
+          .timestamp
+            Jan 16th, 836pm PST
+      #sidebar
+        %h2
+          Why this site?
+        %p
+          This site was built to separate the vital requests for urgent help from the other posts about the term "haiti". The volume of data on this tip is so large thatit takes an army of people to go through it and locate these vital posts.
+        %h2
+          Links
+        %p
+          %a{ :href => "#" }
+            Donate (Red Cross)
+          %br
+          %a{ :href => "#" }
+            haiti.ushahidi.com
+          %br
+          %a{ :href => "#" }
+            Crisis Maps
+          %br
+          %a{ :href => "#" }
+            RHOK
+      #footer
+        \&copy; 2010 crisisfilter.org.
+        %a{ :href => "#" }
+          Sample Link
