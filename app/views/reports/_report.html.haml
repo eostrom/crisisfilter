@@ -4,6 +4,8 @@
       = image_submit_tag('btn_report_crisis.gif')
     .notacrisis
       = link_to_remote('Not a crisis', :url=>downvote_report_path(report), :method => :put)
+    .votes
+      = "#{report.upvotes} upvotes, #{report.downvotes} downvotes"
       
 
   %img{:src => report.user_profile_image_url, :style => "overflow:auto;" }

@@ -7,7 +7,7 @@ class AddUpDownViewsToReport < ActiveRecord::Migration
 
   def self.down
     remove_column :reports, :downvotes
-    rename_column :upvotes, :votes
+    rename_column :reports, :upvotes, :votes
     remove_column :reports, :views
   end
 end

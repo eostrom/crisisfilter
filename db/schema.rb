@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(:version => 20100123215933) do
     t.string   "user_provenance_key"
     t.string   "user_homepage_url"
     t.integer  "views"
-    t.integer  "downvotes"
+    t.integer  "downvotes",              :default => 0
   end
 
 end

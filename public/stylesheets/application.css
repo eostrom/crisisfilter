@@ -201,6 +201,12 @@ body {
     font-style: italic;
 }
 
+#content .update .votes {
+    font-family: Georgia, Times, serif;
+    color: #999;
+    font-size: 12px;
+}
+
 #content:first {
     padding-top: 0;
 }
