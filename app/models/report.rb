@@ -101,7 +101,7 @@ protected
         end
       end
       if (loc = result.at("location"))
-        #FIXME: save this into the location
+        report.location = loc.inner_text
       end
 
       report.provenance = "twitter"
