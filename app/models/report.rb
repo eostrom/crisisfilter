@@ -70,9 +70,10 @@ class Report < ActiveRecord::Base
 protected
 
   def geocode_content
-    return if latitude and longitude
-    lat,lon,rad = Dynamapper.geolocate(content)
-    update_attributes(:latitude => lat, :longitude => lon)
+    unless latitude && longitude
+      lat,lon,rad = Dynamapper.geolocate(content)
+      update_attributes(:latitude => lat, :longitude => lon) if lat && lon
+    end
   end
 
   def self.refresh( host, path, params )
