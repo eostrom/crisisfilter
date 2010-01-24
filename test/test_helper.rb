@@ -2,6 +2,13 @@ ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'test_help'
 
+require 'factory_girl'
+
+require 'webmock/test_unit'
+include WebMock
+
+WebMock.disable_net_connect!
+
 class ActiveSupport::TestCase
   # Transactional fixtures accelerate your tests by wrapping each test method
   # in a transaction that's rolled back on completion.  This ensures that the
@@ -16,7 +23,7 @@ class ActiveSupport::TestCase
   # don't care one way or the other, switching from MyISAM to InnoDB tables
   # is recommended.
   #
-  # The only drawback to using transactional fixtures is when you actually 
+  # The only drawback to using transactional fixtures is when you actually
   # need to test transactions.  Since your test is bracketed by a transaction,
   # any transactions started in your code will be automatically rolled back.
   self.use_transactional_fixtures = true
@@ -32,7 +39,8 @@ class ActiveSupport::TestCase
   #
   # Note: You'll currently still have to declare fixtures explicitly in integration tests
   # -- they do not yet inherit this setting
-  fixtures :all
+#   fixtures :all
 
   # Add more helper methods to be used by all tests here...
 end
+
