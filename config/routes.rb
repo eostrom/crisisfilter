@@ -1,4 +1,10 @@
 ActionController::Routing::Routes.draw do |map|
+  map.signup 'signup', :controller => 'users', :action => 'new'
+  map.logout 'logout', :controller => 'users', :action => 'destroy'
+  map.login  'login',  :controller => 'user', :action => 'new'
+
+  map.resources :users
+
   map.root :controller => 'reports'
 
   map.resources :reports, {

@@ -10,3 +10,9 @@
 
 = render :partial => 'search'
 = render :partial => 'report', :collection => @reports
+
+- content_for :sidebar do
+  - unless logged_in?
+    = render :partial => "layouts/user_form" 
+  - else
+    = render :partial => "layouts/user_info"
