@@ -17,6 +17,8 @@
 
 class Report < ActiveRecord::Base
 
+  attr_accessible []
+
   attr_accessor :formatted_output
 
   simple_search :fields => [:content, :user]
