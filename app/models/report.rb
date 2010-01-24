@@ -37,6 +37,8 @@ class Report < ActiveRecord::Base
       end_time = Time.now
     end
 
+    # FIXME: sqlite3, at least, doesn't properly compare these
+    # machine-local times with the Haiti-local timestamps
     { :conditions => ['created_at BETWEEN ? AND ?', start_time, end_time] }
   }
 

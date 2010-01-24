@@ -94,6 +94,10 @@ body {
     -webkit-border-radius: 10px;
 }
 
+#content #filter label {
+    display: none;
+}
+
 #content #filter ul {
     margin: 0;
     padding: 0;
