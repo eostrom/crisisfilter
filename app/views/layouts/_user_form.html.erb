@@ -1,0 +1,21 @@
+<div id="login_form">
+  <p>
+    Enter in your email address and password even if you don't have an account! Its that easy.
+  </p>
+
+<% form_tag users_path do %>
+  <p>
+    <%= label_tag :email, "Email Address" %><br />
+    <%= text_field_tag :email, params[:email] %>
+  </p>
+  <p>
+    <%= label_tag :password %><br />
+    <%= password_field_tag :password, "", :value => nil %>
+  </p>
+  <p>
+    <label for="remember_me" class="checkbox">Remember me</label>
+    <%= check_box_tag 'remember_me', '1', true %>
+  </p>
+  <p><%= submit_tag "Start me up!" %></p>
+<% end %>
+</div>
