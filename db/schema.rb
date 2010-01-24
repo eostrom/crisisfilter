@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(:version => 20100123215933) do
     t.string   "user_homepage_url"
     t.integer  "views"
     t.integer  "downvotes",              :default => 0
+    t.string   "location"
   end
 
 end
