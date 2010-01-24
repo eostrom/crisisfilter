@@ -24,7 +24,7 @@ class Report < ActiveRecord::Base
   def self.refresh_if_needed
     # If tweets slow down but use of our app doesn't, this will
     # result in a lot of extra hits to the Twitter feed.
-    return if Time.now - calculate(:max, :created_at) < 20.seconds
+    return unless calculate(:max, :created_at).nil? || Time.now - calculate(:max, :created_at) > 20.seconds
 
     stopwords = %w(RT rt crisiscamppdx haiti_tweets).map {|word| "-#{word}"}.join(' ')
 
@@ -71,6 +71,17 @@ protected
 
       report.content = result.at("text").inner_text
       next if report.content =~ /via @/i
+
+      if (geo = result.at("geo"))
+        begin
+          report.latitude, report.longitude = (geo/:coordinates).map { |c| c.inner_text.to_f }
+        rescue
+          #FIXME: deal with a parsing failure here
+        end
+      end
+      if (loc = result.at("location"))
+        #FIXME: save this into the location
+      end
 
       report.provenance = "twitter"
       report.user_profile_image_url = result.at("profile_image_url").inner_text
