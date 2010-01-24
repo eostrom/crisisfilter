@@ -21,7 +21,7 @@ module Authentication
   end
   
   def current_user
-    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+    @current_user ||= (login_from_session || login_from_cookie )
   end
   
   def logged_in?
@@ -46,4 +46,19 @@ module Authentication
   def store_target_location
     session[:return_to] = request.request_uri
   end
+  
+  def login_from_session
+    User.find(session[:user_id]) if session[:user_id]
+  end
+  
+  # Called from #current_person.  Finaly, attempt to login by an expiring token in the cookie.
+  def login_from_cookie
+    user = cookies[:auth_token] && User.find_by_remember_token(cookies[:auth_token])
+    if user && user.remember_token?
+      person.remember_me
+      cookies[:auth_token] = { :value => person.remember_token, :expires => person.remember_token_expires_at }
+      self.current_person = person
+    end
+  end
+  
 end

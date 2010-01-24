@@ -1,22 +1,21 @@
-<p>Already have an account? <%= link_to "Log in", login_path %>.</p>
+<p>
+  Even if you don't have an account, you can enter in your email address and password to
+  automatically login.
+</p>
 
-<% form_for @user do |f| %>
-  <%= f.error_messages %>
+<% form_tag users_path do %>
   <p>
-    <%= f.label :username %><br />
-    <%= f.text_field :username %>
+    <%= label_tag :email, "Email Address" %><br />
+    <%= text_field_tag :email, params[:email] %>
   </p>
   <p>
-    <%= f.label :email, "Email Address" %><br />
-    <%= f.text_field :email %>
+    <%= label_tag :password %><br />
+    <%= password_field_tag :password %>
   </p>
   <p>
-    <%= f.label :password %><br />
-    <%= f.password_field :password %>
+    <label for="remember_me" class="checkbox">Remember me</label>
+    <%= check_box_tag 'remember_me', '1', true %>
   </p>
-  <p>
-    <%= f.label :password_confirmation, "Confirm Password" %><br />
-    <%= f.password_field :password_confirmation %>
-  </p>
-  <p><%= f.submit "Sign up" %></p>
+
+  <p><%= f.submit "Come on in!" %></p>
 <% end %>
