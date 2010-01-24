@@ -51,6 +51,12 @@ class ReportsController < ApplicationController
       format.html
       format.xml  { render :xml => @reports }
     end
+    rescue ActiveRecord::StatementInvalid
+      flash[:error] = "There is a problem with your query."
+      @reports = Report.paginate(:order => 'created_at DESC',
+                                 :page  => params[:page], 
+                                 :per_page => REPORTS_PER_PAGE)
+    end
   end
 
   def filter

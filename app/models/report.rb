@@ -19,7 +19,7 @@ class Report < ActiveRecord::Base
 
   attr_accessor :formatted_output
 
-  simple_search :fields => [:content, :longitude, :latitude, :user]
+  simple_search :fields => [:content, :user]
 
   named_scope :the_latest, :order => 'created_at DESC', :limit => 1
 
