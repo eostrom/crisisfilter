@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100124003144) do
+ActiveRecord::Schema.define(:version => 20100124021324) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -37,6 +37,8 @@ ActiveRecord::Schema.define(:version => 20100124003144) do
     t.string   "user_profile_image_url"
     t.string   "user_provenance_key"
     t.string   "user_homepage_url"
+    t.string   "location"
+    t.string   "geotag_source"
   end
 
 end

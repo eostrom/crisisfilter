@@ -72,7 +72,7 @@ protected
   def geocode_content
     unless latitude && longitude
       lat,lon,rad = Dynamapper.geolocate(content)
-      update_attributes(:latitude => lat, :longitude => lon) if lat && lon
+      update_attributes(:latitude => lat, :longitude => lon, :geotag_source => 'metacarta') if lat && lon
     end
   end
 
@@ -107,6 +107,7 @@ protected
       if (geo = result.at("geo"))
         begin
           report.latitude, report.longitude = (geo/:coordinates).map { |c| c.inner_text.to_f }
+          report.geotag_source = 'twitter'
         rescue
           #FIXME: deal with a parsing failure here
         end
