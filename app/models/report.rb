@@ -1,3 +1,5 @@
+require 'dynamapper/geolocate.rb'
+
 class Report < ActiveRecord::Base
 
   attr_accessor :formatted_output
@@ -20,6 +22,8 @@ class Report < ActiveRecord::Base
 
     { :conditions => ['created_at BETWEEN ? AND ?', start_time, end_time] }
   }
+
+  after_save :geocode_content
 
   def self.refresh_if_needed
     # If tweets slow down but use of our app doesn't, this will
@@ -45,6 +49,12 @@ class Report < ActiveRecord::Base
   end
 
 protected
+
+  def geocode_content
+    return if latitude and longitude
+    lat,lon,rad = Dynamapper.geolocate(content)
+    update_attributes(:latitude => lat, :longitude => lon)
+  end
 
   def self.refresh( host, path, params )
     query_string = params.map do |k,v|

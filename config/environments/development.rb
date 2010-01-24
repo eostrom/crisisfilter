@@ -15,3 +15,8 @@ config.action_controller.perform_caching             = false
 
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = false
+
+# DelayedJob async handlers (if enabled, run `rake jobs:work` to run the jobs as they're added)
+#config.after_initialize do
+#  Report.handle_asynchronously :geocode_content
+#end

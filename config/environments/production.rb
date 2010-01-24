@@ -26,3 +26,8 @@ config.action_view.cache_template_loading            = true
 
 # Enable threaded mode
 # config.threadsafe!
+
+# DelayedJob async handlers
+config.after_initialize do
+  Report.handle_asynchronously :geocode_content
+end
