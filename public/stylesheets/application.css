@@ -72,6 +72,13 @@ body {
     -webkit-border-radius: 10px;
 }
 
+#login_form, #user_info {
+    padding: 20px;
+    background: #FFF;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+}
+
 #content a {
     color: #3DBBDE;
     text-decoration: none;
