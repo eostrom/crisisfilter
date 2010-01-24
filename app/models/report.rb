@@ -1,6 +1,25 @@
+=begin
+  create_table "reports", :force => true do |t|
+    t.string   "yql_id"
+    t.string   "provenance"
+    t.string   "content"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.integer  "votes",                  :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "user"
+    t.string   "user_profile_image_url"
+    t.string   "user_provenance_key"
+    t.string   "user_homepage_url"
+  end
+=end
+
 class Report < ActiveRecord::Base
 
   attr_accessor :formatted_output
+
+  simple_search :fields => [:content, :user]
 
   named_scope :the_latest, :order => 'created_at DESC', :limit => 1
 
@@ -27,12 +46,22 @@ class Report < ActiveRecord::Base
     max = calculate(:max, :created_at)
     return if max && Time.now - max < 20.seconds
 
+    stopwords = %w(RT rt crisiscamppdx haiti_tweets).map {|word| "-#{word}"}.join(' ')
+
     refresh("query.yahooapis.com", "/v1/public/yql",
       {
-        "q"  => "select * from twitter.search where q='#haiti #need -RT -rt';",
+        "q"  => "select * from twitter.search where q='haiti #{stopwords}';",
         "format" => "xml",
         "env" => "store://datatables.org/alltableswithkeys"
       })
+
+    refresh("query.yahooapis.com", "/v1/public/yql",
+      {
+        "q"  => "select * from twitter.search where q='#{stopwords}' and geocode='18.542980,-72.343102,50mi';",
+        "format" => "xml",
+        "env" => "store://datatables.org/alltableswithkeys"
+      })
+
   end
 
 protected
@@ -57,9 +86,26 @@ protected
     (doc/:query/:results).each_with_index do |result, count|
       report = Report.new()
 
-      report.content = result.at("text").inner_text
-      report.provenance = "twitter"
       report.yql_id = result.at("id").inner_text
+      next if exists?(:yql_id => report.yql_id)
+
+      report.content = result.at("text").inner_text
+
+      # Remove retweets since obstensibly we already have the original tweet
+      next if report.content =~ /via @/i
+
+      if (geo = result.at("geo"))
+        begin
+          report.latitude, report.longitude = (geo/:coordinates).map { |c| c.inner_text.to_f }
+        rescue
+          #FIXME: deal with a parsing failure here
+        end
+      end
+      if (loc = result.at("location"))
+        report.location = loc.inner_text
+      end
+
+      report.provenance = "twitter"
       report.user_profile_image_url = result.at("profile_image_url").inner_text
       report.user = result.at("from_user").inner_text
 
@@ -68,6 +114,10 @@ protected
       next if report.user == "haiti_tweets"
       next if report.user == "haititweets"
       next if report.user == "haititweaks"
+
+      # Prevent duplicate messages
+      next if Report.exists?(:content => report.content)
+
 
       report.save
     end

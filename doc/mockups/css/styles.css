@@ -137,10 +137,6 @@ body {
     font-size:24px; line-height: 1.4em; color: #666;
 }
 
-#content .update img {
-    width: 48px;
-}
-
 #content .update .actions {
     float: right;
     padding-left: 20px;
@@ -205,17 +201,11 @@ body {
     font-style: italic;
 }
 
-#content .update .votes {
-    font-family: Georgia, Times, serif;
-    color: #999;
-    font-size: 12px;
-}
-
-#content:first {
+#content .first {
     padding-top: 0;
 }
 
-#content:last {
+#content .last {
     border-bottom: none;
 }
 
@@ -241,12 +231,6 @@ body {
 
 #sidebar p a:hover {
     text-decoration: none;
-}
-
-#sidebar ul, #sidebar li {
-    list-style: none;
-    margin: 0;
-    padding: 0;
 }
 
 #footer {

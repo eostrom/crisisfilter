@@ -1,0 +1,47 @@
+!!!
+%html{ :lang => "en" }
+  %head
+    %meta{ :content => "text/html; charset=utf-8", "http-equiv" => "Content-Type" }
+    %title
+      untitled
+    %meta{ :name => "generator", :content => "TextMate http://macromates.com/" }
+    %meta{ :name => "author", :content => "Ian Silber" }
+    /
+      Date: 2010-01-18
+    %style
+      body#form {
+      margin: 0;
+      padding: 0;
+      background-color: #E4EAE7;
+      }
+      body div#form_handled {
+      padding: 20px;
+      background-color: #E4EAE7;
+      font-size: 11px;
+      font-color: #333;
+      font-weight: bold;
+      font-family: Helvetica, arial, sans-serif;
+      }
+      
+      \#form_handled input.text, #form_handled textarea {
+      border: none;
+      padding: 5px;
+      color: #333;
+      font-weight: bold;
+      font-size: 11px;
+      font-family: Helvetica, arial, sans-serif;
+      width: 300px;
+      
+      }
+  %body#form
+    #form_handled
+      %p
+        Name
+        %br
+        %input#name.text{ :name => "name", :type => "text", :value => "" }
+      %p
+        Message
+        %br
+        %textarea{ :name => "message", :rows => "8", :cols => "40" }
+      %p
+        %input{ :name => "", :type => "submit", :value => "Mark as Handled" }

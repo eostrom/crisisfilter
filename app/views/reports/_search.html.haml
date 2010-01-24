@@ -1,0 +1,9 @@
+- unless params[:query].blank?
+  %h1
+    = page_entries_info @reports
+    for
+    %strong
+      =h params[:query]
+- form_tag reports_path, :method => :get do
+  = text_field_tag :query
+  = submit_tag "Search"
