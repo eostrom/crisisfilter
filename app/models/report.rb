@@ -1,8 +1,27 @@
 require 'dynamapper/geolocate.rb'
 
+=begin
+  create_table "reports", :force => true do |t|
+    t.string   "yql_id"
+    t.string   "provenance"
+    t.string   "content"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.integer  "votes",                  :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "user"
+    t.string   "user_profile_image_url"
+    t.string   "user_provenance_key"
+    t.string   "user_homepage_url"
+  end
+=end
+
 class Report < ActiveRecord::Base
 
   attr_accessor :formatted_output
+
+  simple_search :fields => [:content, :user]
 
   named_scope :the_latest, :order => 'created_at DESC', :limit => 1
 
@@ -83,6 +102,17 @@ protected
       
       # Remove retweets since obstensibly we already have the original tweet
       next if report.content =~ /via @/i
+
+      if (geo = result.at("geo"))
+        begin
+          report.latitude, report.longitude = (geo/:coordinates).map { |c| c.inner_text.to_f }
+        rescue
+          #FIXME: deal with a parsing failure here
+        end
+      end
+      if (loc = result.at("location"))
+        report.location = loc.inner_text
+      end
 
       report.provenance = "twitter"
       report.user_profile_image_url = result.at("profile_image_url").inner_text
