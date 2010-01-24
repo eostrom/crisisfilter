@@ -1,3 +1,5 @@
+require 'dynamapper/geolocate.rb'
+
 =begin
   create_table "reports", :force => true do |t|
     t.string   "yql_id"
@@ -40,6 +42,8 @@ class Report < ActiveRecord::Base
     { :conditions => ['created_at BETWEEN ? AND ?', start_time, end_time] }
   }
 
+  after_save :geocode_content
+
   def self.refresh_if_needed
     # If tweets slow down but use of our app doesn't, this will
     # result in a lot of extra hits to the Twitter feed.
@@ -64,6 +68,13 @@ class Report < ActiveRecord::Base
   end
 
 protected
+
+  def geocode_content
+    unless latitude && longitude
+      lat,lon,rad = Dynamapper.geolocate(content)
+      update_attributes(:latitude => lat, :longitude => lon, :geotag_source => 'metacarta') if lat && lon
+    end
+  end
 
   def self.refresh( host, path, params )
     query_string = params.map do |k,v|
@@ -96,6 +107,7 @@ protected
       if (geo = result.at("geo"))
         begin
           report.latitude, report.longitude = (geo/:coordinates).map { |c| c.inner_text.to_f }
+          report.geotag_source = 'twitter'
         rescue
           #FIXME: deal with a parsing failure here
         end

@@ -1,0 +1,78 @@
+Version
+=======
+
+0.0.1
+Feb 21 2008
+Anselm
+
+Dynamap
+=======
+
+A json driven google maps helper;
+
+ + delivers json to the client to then produce the view - does not bake the view on the server
+ + more suitable for dynamic maps
+ + generic methods - avoiding the 'hall of mirrors' effect of dozens of similarly named methods
+ + small
+
+ - does not deal with google map token
+ - does not pass through parameters it does not recognize
+ - probably needs a way to flush and build new json strings for ajax invocations
+
+ Example
+ =======
+ 
+ <%
+ 
+    @map = Mapper.new
+ 
+    @map.center(0,0,2)
+ 
+    @icon_start = @map.feature(
+             :kind => "icon",
+             :image => "http://maps.google.com/mapfiles/kml/pal5/icon13.png",
+             :iconSize => [ 24,38 ],
+             :iconAnchor => [ 12,38 ],
+             :infoWindowAnchor => [ 9,2 ]
+         )
+ 
+    @icon_stop = @map.feature(
+             :kind => "icon",
+             :image => "http://maps.google.com/mapfiles/kml/pal5/icon14.png",
+             :iconSize => [ 24,38 ],
+             :iconAnchor => [ 12,38 ],
+             :infoWindowAnchor => [ 9,2 ]
+         )
+
+    @map.feature( {
+       :kind=>"marker",
+       :lat=>address.lat,
+       :lon=>address.lng,
+       :title => title,
+       :icon => @icon_stop,
+       :infoWindow => info_window
+      })
+
+	@map.feature( {
+	   :kind=>"line",
+	   :lat=>member_address.lat,
+	   :lon=>member_address.lng,
+	   :lat2=>subject_address.lat,
+	   :lon2=>subject_address.lng,
+	   :color => color,
+	   :width => 3,
+	   :opacity => 0.7
+	  })
+
+%>
+ 
+<html>
+<head>
+<%=@map.head()%>
+</head>
+<body>
+<%=@map.body()%>
+</body>
+<%=@map.tail()%>
+</html>
+ 
