@@ -56,7 +56,6 @@ class ReportsController < ApplicationController
       @reports = Report.paginate(:order => 'created_at DESC',
                                  :page  => params[:page], 
                                  :per_page => REPORTS_PER_PAGE)
-    end
   end
 
   def filter
