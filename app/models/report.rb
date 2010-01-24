@@ -1,6 +1,25 @@
+=begin
+  create_table "reports", :force => true do |t|
+    t.string   "yql_id"
+    t.string   "provenance"
+    t.string   "content"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.integer  "votes",                  :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "user"
+    t.string   "user_profile_image_url"
+    t.string   "user_provenance_key"
+    t.string   "user_homepage_url"
+  end
+=end
+
 class Report < ActiveRecord::Base
 
   attr_accessor :formatted_output
+
+  simple_search :fields => [:content, :longitude, :latitude, :user]
 
   named_scope :the_latest, :order => 'created_at DESC', :limit => 1
 
@@ -65,11 +84,13 @@ protected
     doc = Hpricot.parse( xml_text )
     (doc/:query/:results).each_with_index do |result, count|
       report = Report.new()
-
+      
       report.yql_id = result.at("id").inner_text
       next if exists?(:yql_id => report.yql_id)
 
       report.content = result.at("text").inner_text
+      
+      # Remove retweets since obstensibly we already have the original tweet
       next if report.content =~ /via @/i
 
       if (geo = result.at("geo"))
@@ -92,6 +113,10 @@ protected
       next if report.user == "haiti_tweets"
       next if report.user == "haititweets"
       next if report.user == "haititweaks"
+
+      # Prevent duplicate messages
+      next if Report.exists?(:content => report.content)
+
 
       report.save
     end

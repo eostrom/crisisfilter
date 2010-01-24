@@ -36,10 +36,17 @@ class ReportsController < ApplicationController
     refreshed = Report.refresh_if_needed
     flash.now[:refresh] = "#{refreshed} new tweets" if refreshed
 
-    @reports = Report.paginate(
-      :order => 'created_at DESC',
-      :page => params[:page], :per_page => REPORTS_PER_PAGE)
-
+    @reports = 
+    if params[:query].blank?
+      Report.paginate(:order => 'created_at DESC',
+                      :page  => params[:page], 
+                      :per_page => REPORTS_PER_PAGE)
+    else
+      Report.simple_search_query(params[:query]).paginate(:order => 'created_at DESC',
+                                                          :page  => params[:page], 
+                                                          :per_page => REPORTS_PER_PAGE)
+    end
+    
     respond_to do |format|
       format.html
       format.xml  { render :xml => @reports }

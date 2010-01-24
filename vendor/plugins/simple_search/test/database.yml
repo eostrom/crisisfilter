@@ -1,0 +1,18 @@
+sqlite:
+  :adapter: sqlite
+  :database: db/simple_search_test.sqlite
+sqlite3:
+  :adapter: sqlite3
+  :database: db/simple_search_test.sqlite3
+mysql:
+  :adapter: mysql
+  :host: localhost
+  :username: root
+  :password:
+  :database: simple_search_test
+postgresql:
+  :adapter: postgresql
+  :host: localhost
+  :username: root
+  :password: 
+  :database: simple_search_test
