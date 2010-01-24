@@ -8,3 +8,4 @@ doc/app
 config/database.yml
 db/development_structure.sql
 db/*.sqlite3
+rerun.txt
