@@ -45,7 +45,7 @@ class Report < ActiveRecord::Base
     { :conditions => ['created_at BETWEEN ? AND ?', start_time, end_time] }
   }
 
-  before_save :geocode_content
+  after_create :geocode_content
 
   def self.refresh_if_needed
     # If tweets slow down but use of our app doesn't, this will
@@ -82,11 +82,10 @@ protected
         lat,lon,rad = Dynamapper.geolocate(location)
         source = "metacarta"
       end
-      update_attributes = {
-        :latitude => lat,
-        :longitude => lon,
-        :geotag_source => source
-      } if lat && lon
+      # NOTE: `attr_accessible []` prevents mass assignment
+      self.latitude = lat
+      self.longitude = lon
+      self.geotag_source = source
     end
   end
 
