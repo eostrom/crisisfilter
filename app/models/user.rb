@@ -15,10 +15,10 @@ class User < ActiveRecord::Base
   def self.authenticate(email, pass)
     user = find_by_email(email)
     user = 
-    if user
-      user.matching_password?(pass) ? user : nil
+    if user and user.matching_password?(pass)
+      user
     else
-      create(:email => email, :password => pass)
+      User.new(:email => email, :password => pass)
     end
     return user
   end
