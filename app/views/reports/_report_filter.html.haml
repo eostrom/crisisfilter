@@ -3,14 +3,16 @@
 .update
   .reports_count
     %span.num
-      = report.votes
+      = report.upvotes
+      = "(-#{report.downvotes})" if report.downvotes > 0
     %br
-    = report.votes == 1 ? 'report' : 'reports'
+    = report.upvotes == 1 ? 'report' : 'reports'
     .handled
       %a{ :href => "./form.html" }
         Mark as handled...
   %a.username{ :href => "#" }
     =h "@#{report.user}"
-  =h report.content
+  %span.content
+    =h report.content
   .timestamp
     = report.created_at

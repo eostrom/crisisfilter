@@ -19,7 +19,7 @@ require 'dynamapper/geolocate.rb'
 
 class Report < ActiveRecord::Base
 
-  attr_accessor :formatted_output
+  attr_accessible []
 
   simple_search :fields => [:content, :user]
 
@@ -39,15 +39,18 @@ class Report < ActiveRecord::Base
       end_time = Time.now
     end
 
+    # FIXME: sqlite3, at least, doesn't properly compare these
+    # machine-local times with the Haiti-local timestamps
     { :conditions => ['created_at BETWEEN ? AND ?', start_time, end_time] }
   }
 
-  after_save :geocode_content
+  before_save :geocode_content
 
   def self.refresh_if_needed
     # If tweets slow down but use of our app doesn't, this will
     # result in a lot of extra hits to the Twitter feed.
-    return unless calculate(:max, :created_at).nil? || Time.now - calculate(:max, :created_at) > 20.seconds
+    max = calculate(:max, :created_at)
+    return if max && Time.now - max < 20.seconds
 
     stopwords = %w(RT rt crisiscamppdx haiti_tweets).map {|word| "-#{word}"}.join(' ')
 
@@ -72,7 +75,11 @@ protected
   def geocode_content
     unless latitude && longitude
       lat,lon,rad = Dynamapper.geolocate(content)
-      update_attributes(:latitude => lat, :longitude => lon, :geotag_source => 'metacarta') if lat && lon
+      attributes = {
+        :latitude => lat,
+        :longitude => lon,
+        :geotag_source => 'metacarta'
+      } if lat && lon
     end
   end
 
@@ -95,12 +102,12 @@ protected
     doc = Hpricot.parse( xml_text )
     (doc/:query/:results).each_with_index do |result, count|
       report = Report.new()
-      
+
       report.yql_id = result.at("id").inner_text
       next if exists?(:yql_id => report.yql_id)
 
       report.content = result.at("text").inner_text
-      
+
       # Remove retweets since obstensibly we already have the original tweet
       next if report.content =~ /via @/i
 

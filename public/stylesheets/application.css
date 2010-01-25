@@ -101,6 +101,10 @@ body {
     -webkit-border-radius: 10px;
 }
 
+#content #filter label {
+    display: none;
+}
+
 #content #filter ul {
     margin: 0;
     padding: 0;
@@ -210,6 +214,12 @@ body {
     color: #999;
     font-size: 13px;
     font-style: italic;
+}
+
+#content .update .votes {
+    font-family: Georgia, Times, serif;
+    color: #999;
+    font-size: 12px;
 }
 
 #content:first {

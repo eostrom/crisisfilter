@@ -4,49 +4,21 @@ class ReportsController < ApplicationController
 
   REPORTS_PER_PAGE = 20
 
-  def create
-    @report = Report.new(params[:report])
-    respond_to do |format|
-      if @report.save
-        flash[:notice] = 'Report was successfully created.'
-        format.html { redirect_to @report }
-        format.xml  { render :xml => @report, :status => :created, :location => @report }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @report.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  def destroy
-    respond_to do |format|
-      if @report.destroy
-        flash[:notice] = 'Report was successfully destroyed.'
-        format.html { redirect_to reports_path }
-        format.xml  { head :ok }
-      else
-        flash[:error] = 'Report could not be destroyed.'
-        format.html { redirect_to @report }
-        format.xml  { head :unprocessable_entity }
-      end
-    end
-  end
-
   def index
     refreshed = Report.refresh_if_needed
     flash.now[:refresh] = "#{refreshed} new tweets" if refreshed
 
-    @reports = 
+    @reports =
     if params[:query].blank?
       Report.paginate(:order => 'created_at DESC',
-                      :page  => params[:page], 
+                      :page  => params[:page],
                       :per_page => REPORTS_PER_PAGE)
     else
       Report.simple_search_query(params[:query]).paginate(:order => 'created_at DESC',
-                                                          :page  => params[:page], 
+                                                          :page  => params[:page],
                                                           :per_page => REPORTS_PER_PAGE)
     end
-    
+
     respond_to do |format|
       format.html
       format.xml  { render :xml => @reports }
@@ -54,55 +26,30 @@ class ReportsController < ApplicationController
     rescue ActiveRecord::StatementInvalid
       flash[:error] = "There is a problem with your query."
       @reports = Report.paginate(:order => 'created_at DESC',
-                                 :page  => params[:page], 
+                                 :page  => params[:page],
                                  :per_page => REPORTS_PER_PAGE)
   end
 
   def filter
     params[:search] ||= {}
 
-    params[:search][:order] ||= :descend_by_votes
+    params[:search][:order] ||= :descend_by_upvotes # +++ should be diff up - down
     params[:search][:timeframe] ||= 'hour'
-    params[:search][:votes_gte] ||= 1
+    params[:search][:upvotes_gte] ||= 1 # ??? what's this?
 
     @search = Report.search(params[:search])
     @reports = @search.paginate(:page => params[:page])
   end
 
-  def edit
+  def upvote
+    @report.increment!(:upvotes)
+    flash[:notice] = "upvoted: #{@report.content}"
+    redirect_to reports_path
   end
 
-  def new
-    @report = Report.new
-    respond_to do |format|
-      format.html
-      format.xml  { render :xml => @report }
-    end
-  end
-
-  def show
-    respond_to do |format|
-      format.html
-      format.xml  { render :xml => @report }
-    end
-  end
-
-  def update
-    respond_to do |format|
-      if @report.update_attributes(params[:report])
-        flash[:notice] = 'Report was successfully updated.'
-        format.html { redirect_to @report }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @report.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  def vote
-    @report.increment!(:votes)
-    flash[:notice] = "voted: #{@report.content}"
+  def downvote
+    @report.increment!(:downvotes)
+    flash[:notice] = "downvoted: #{@report.content}"
     redirect_to reports_path
   end
 

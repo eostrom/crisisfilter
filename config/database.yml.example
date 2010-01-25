@@ -1,8 +1,6 @@
 development:
-  adapter: postgresql
-  database: crisisfilter_development
-  username: crisisfilter_development
-  password: crisisfilter_development
+  adapter: sqlite3
+  database: db/crisisfilter_development.sqlite3
 
 production:
   adapter: postgresql

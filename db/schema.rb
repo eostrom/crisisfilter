@@ -30,32 +30,17 @@ ActiveRecord::Schema.define(:version => 20100124042414) do
     t.string   "content"
     t.float    "latitude"
     t.float    "longitude"
-    t.integer  "votes",                  :default => 0
+    t.integer  "upvotes",                :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "user"
     t.string   "user_profile_image_url"
     t.string   "user_provenance_key"
     t.string   "user_homepage_url"
+    t.integer  "views"
+    t.integer  "downvotes",              :default => 0
     t.string   "location"
     t.string   "geotag_source"
-  end
-
-  create_table "taggings", :force => true do |t|
-    t.integer  "tag_id"
-    t.integer  "taggable_id"
-    t.integer  "tagger_id"
-    t.string   "tagger_type"
-    t.string   "taggable_type"
-    t.string   "context"
-    t.datetime "created_at"
-  end
-
-  add_index "taggings", ["tag_id"], :name => "index_taggings_on_tag_id"
-  add_index "taggings", ["taggable_id", "taggable_type", "context"], :name => "index_taggings_on_taggable_id_and_taggable_type_and_context"
-
-  create_table "tags", :force => true do |t|
-    t.string "name"
   end
 
   create_table "users", :force => true do |t|
