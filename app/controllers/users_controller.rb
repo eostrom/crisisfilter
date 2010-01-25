@@ -1,11 +1,10 @@
 class UsersController < ApplicationController
   def new
-    @user = User.new
   end
   
   def create
     @user = User.authenticate(params[:email], params[:password])
-    if @user
+    if @user.save
       session[:user_id] = @user.id
       add_auth_token if params[:remember_me] == "1"
       flash[:notice] = "Logged in successfully."
