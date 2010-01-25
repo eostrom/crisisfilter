@@ -75,7 +75,7 @@ protected
 
   def geocode_content
     if location && !latitude && !longitude
-      if md = location.match(/^ÜT:\s*([^,]+,.+)/)  # GPS coordinates supplied by UberTwitter
+      if md = location.match(/^(?:ÜT|iPhone):\s*([^,]+,.+)/)  # GPS coordinates supplied by UberTwitter and iPhone
         lat,lon = md[1].split(',').map(&:to_f)
         source = "twitter"
       else

@@ -22,4 +22,11 @@ class ReportTest < ActiveSupport::TestCase
     assert_equal latlon, [report.latitude,report.longitude]
   end
 
+  def test_should_save_iphone_location_data
+    latlon = [23.45,-98.76]
+    report = Factory.build(:report, :latitude => nil, :longitude => nil, :location => "iPhone: #{latlon.join(',')}")
+    assert report.save
+    assert_equal latlon, [report.latitude,report.longitude]
+  end
+
 end
