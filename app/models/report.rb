@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require 'dynamapper/geolocate.rb'
 
 =begin
@@ -73,12 +74,18 @@ class Report < ActiveRecord::Base
 protected
 
   def geocode_content
-    unless latitude && longitude
-      lat,lon,rad = Dynamapper.geolocate(content)
-      attributes = {
+    if location && !latitude && !longitude
+      if md = location.match(/^ÜT:\s*([^,]+,.+)/)  # GPS coordinates supplied by UberTwitter
+        lat,lon = md[1].split(',').map(&:to_f)
+        source = "twitter"
+      else
+        lat,lon,rad = Dynamapper.geolocate(location)
+        source = "metacarta"
+      end
+      update_attributes = {
         :latitude => lat,
         :longitude => lon,
-        :geotag_source => 'metacarta'
+        :geotag_source => source
       } if lat && lon
     end
   end
