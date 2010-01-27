@@ -1,0 +1,12 @@
+<% form_for :user, :url => users_path do |f| %>
+  <p>
+    <%= label_tag :email, "Email Address" %><br />
+    <%= f.text_field :email, :size => 20 %>
+  </p>
+  <p>
+    <%= label_tag :password %><br />
+    <%= f.password_field :password, :size => 20 %>
+  </p>
+
+  <p><%= submit_tag "Start me up!" %></p>
+<% end %>

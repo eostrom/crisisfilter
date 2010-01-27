@@ -1,21 +1,5 @@
 <p>
-  Even if you don't have an account, you can enter in your email address and password to
-  automatically login.
+  Enter in your email address and password to login, even if you haven't registered! 
 </p>
 
-<% form_tag users_path do %>
-  <p>
-    <%= label_tag :email, "Email Address" %><br />
-    <%= text_field_tag :email, params[:email] %>
-  </p>
-  <p>
-    <%= label_tag :password %><br />
-    <%= password_field_tag :password %>
-  </p>
-  <p>
-    <label for="remember_me" class="checkbox">Remember me</label>
-    <%= check_box_tag 'remember_me', '1', true %>
-  </p>
-
-  <p><%= submit_tag "Start me up!" %></p>
-<% end %>
+<%= render :partial => "form" %>

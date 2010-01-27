@@ -16,12 +16,16 @@
 #   before_filter :login_required, :except => [:index, :show]
 module Authentication
   def self.included(controller)
-    controller.send :helper_method, :current_user, :logged_in?, :redirect_to_target_or_default
+    controller.send :helper_method, :current_user, :login_required, :current_user_session, :logged_in?, :redirect_to_target_or_default
     controller.filter_parameter_logging :password
   end
   
   def current_user
-    @current_user ||= (login_from_session || login_from_cookie )
+    @current_user ||= current_user_session && current_user_session.record
+  end
+  
+  def current_user_session
+    @current_user_session ||= UserSession.find
   end
   
   def logged_in?
@@ -45,20 +49,6 @@ module Authentication
   
   def store_target_location
     session[:return_to] = request.request_uri
-  end
-  
-  def login_from_session
-    User.find(session[:user_id]) if session[:user_id]
-  end
-  
-  # Called from #current_person.  Finaly, attempt to login by an expiring token in the cookie.
-  def login_from_cookie
-    user = cookies[:auth_token] && User.find_by_remember_token(cookies[:auth_token])
-    if user && user.remember_token?
-      person.remember_me
-      cookies[:auth_token] = { :value => person.remember_token, :expires => person.remember_token_expires_at }
-      self.current_person = person
-    end
   end
   
 end

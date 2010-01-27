@@ -1,34 +1,30 @@
 class UsersController < ApplicationController
   def new
+    @user = User.new
   end
   
   def create
-    @user = User.authenticate(params[:email], params[:password])
-    if @user.save
-      session[:user_id] = @user.id
-      add_auth_token if params[:remember_me] == "1"
-      flash[:notice] = "Logged in successfully."
-      redirect_to_target_or_default(root_url)
+    
+    if User.exists?(:email => params[:user][:email])
+      @user = UserSession.new(params[:user])
     else
-      flash.now[:error] = "Invalid email or password."
-      render :action => 'new'
+      @user = User.new(params[:user])
     end
+    
+    if @user.save
+      flash[:notice] = "Login successful!"
+      redirect_to_target_or_default root_url
+    else
+      flash[:error] = "You have an invalid email/password combination."
+      render :action => :new
+    end
+
   end
 
   def destroy
-    current_user.forget_me if logged_in?
-    cookies.delete :auth_token
-    session[:user_id] = nil
-    flash[:notice] = "You have been logged out."
-    redirect_to root_url
-  end
-
-private
-  
-  def add_auth_token
-    current_user.remember_me
-    cookies[:auth_token] = { :value   => current_user.remember_token,
-                             :expires => current_user.remember_token_expires_at }
+    current_user_session.destroy
+    flash[:notice] = "Logout successful!"
+    redirect_to_target_or_default root_url
   end
   
 end
