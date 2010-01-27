@@ -1,19 +1,12 @@
 - @title = 'View Crises'
 
 - content_for :javascript do
+  %link{ :href => "/fancybox/jquery.fancybox-1.2.6.css", :rel => "stylesheet", :type => "text/css", :media => "screen" }
   %script{ :type => "text/javascript", :src => "http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js" }
-  %link{ :href => "/fancybox/jquery.fancybox-1.2.6.css", :rel => "stylesheet", :type => "text/css", :media => "screen" }
   %script{ :type => "text/javascript", :src => "/fancybox/jquery.fancybox-1.2.6.pack.js" }
-  %link{ :href => "/fancybox/jquery.fancybox-1.2.6.css", :rel => "stylesheet", :type => "text/css", :media => "screen" }
+  = stylesheet_link_tag "filter", :media => "screen"
   %script{ :type => "text/javascript" }
-    /
-      $(document).ready(function() {
-      $(".handled a").fancybox({
-      'hideOnContentClick': false,
-      });
-      });
-  /
-    Date: 2010-01-18
+    jQuery.noConflict();
 
 - content_for :header_text do
   %strong

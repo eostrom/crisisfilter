@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require 'dynamapper/geolocate.rb'
 
 =begin
@@ -44,7 +45,7 @@ class Report < ActiveRecord::Base
     { :conditions => ['created_at BETWEEN ? AND ?', start_time, end_time] }
   }
 
-  before_save :geocode_content
+  after_create :geocode_content
 
   def self.refresh_if_needed
     # If tweets slow down but use of our app doesn't, this will
@@ -73,13 +74,18 @@ class Report < ActiveRecord::Base
 protected
 
   def geocode_content
-    unless latitude && longitude
-      lat,lon,rad = Dynamapper.geolocate(content)
-      attributes = {
-        :latitude => lat,
-        :longitude => lon,
-        :geotag_source => 'metacarta'
-      } if lat && lon
+    if location && !latitude && !longitude
+      if md = location.match(/^(?:ÜT|iPhone):\s*([^,]+,.+)/)  # GPS coordinates supplied by UberTwitter and iPhone
+        lat,lon = md[1].split(',').map(&:to_f)
+        source = "twitter"
+      else
+        lat,lon,rad = Dynamapper.geolocate(location)
+        source = "metacarta"
+      end
+      # NOTE: `attr_accessible []` prevents mass assignment
+      self.latitude = lat
+      self.longitude = lon
+      self.geotag_source = source
     end
   end
 
