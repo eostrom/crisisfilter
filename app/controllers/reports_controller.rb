@@ -1,31 +1,27 @@
 class ReportsController < ApplicationController
 
-  before_filter :find_report
+  before_filter :find_report, :except => [:index]
 
-  REPORTS_PER_PAGE = 20
+  REPORTS_PER_PAGE = 20 # should be moved into model
 
   def index
     refreshed = Report.refresh_if_needed
     flash.now[:refresh] = "#{refreshed} new tweets" if refreshed
-
-    @reports = Report.paginate(:order => 'created_at DESC',
-                               :page  => params[:page],
-                               :per_page => REPORTS_PER_PAGE)
-
+    
+    # Search defaults
+    params[:search]                ||= {}
+    params[:search][:content_like] ||= "Haiti"
+    params[:search][:order]        ||= :descend_by_upvotes
+        
+    @search  = Report.search(:content_like => params[:search][:content_like],
+                             :order        => params[:search][:order])
+    @reports = @search.paginate(:page => params[:page],
+                                :per_page => REPORTS_PER_PAGE)
+                                
     respond_to do |format|
       format.html
       format.xml  { render :xml => @reports }
     end
-  end
-
-  def filter
-    params[:search] ||= {}
-    params[:search][:order]       ||= :descend_by_upvotes # +++ should be diff up - down
-    params[:search][:timeframe]   ||= 'hour' 
-    params[:search][:upvotes_gte] ||= 1 # upvotes must be greater than or equal to 1
-
-    @search = Report.search(params[:search])
-    @reports = @search.paginate(:page => params[:page])
   end
 
   def upvote
@@ -40,21 +36,10 @@ class ReportsController < ApplicationController
     redirect_to reports_path
   end
 
-  def refresh
-    num_records = Report.get_update( "query.yahooapis.com", "/v1/public/yql", {
-                                               "q"  => "select * from twitter.search where q='#haiti #need -RT -rt';",
-                                               "format" => "xml",
-                                               "env" => "store://datatables.org/alltableswithkeys" }
-                                             )
-
-    flash[:notice] = "update complete, updated #{num_records}"
-    redirect_to reports_path
-  end
-
   private
 
   def find_report
-    @report = Report.find(params[:id]) if params[:id]
+    @report = Report.find(params[:id])
   end
 
 end
