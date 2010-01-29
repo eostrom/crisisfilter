@@ -22,8 +22,6 @@ class Report < ActiveRecord::Base
 
   attr_accessible []
 
-  simple_search :fields => [:content, :user]
-
   named_scope :the_latest, :order => 'created_at DESC', :limit => 1
 
   named_scope :timeframe, lambda { |timeframe|
