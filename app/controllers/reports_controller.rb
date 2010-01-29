@@ -8,34 +8,21 @@ class ReportsController < ApplicationController
     refreshed = Report.refresh_if_needed
     flash.now[:refresh] = "#{refreshed} new tweets" if refreshed
 
-    @reports =
-    if params[:query].blank?
-      Report.paginate(:order => 'created_at DESC',
-                      :page  => params[:page],
-                      :per_page => REPORTS_PER_PAGE)
-    else
-      Report.simple_search_query(params[:query]).paginate(:order => 'created_at DESC',
-                                                          :page  => params[:page],
-                                                          :per_page => REPORTS_PER_PAGE)
-    end
+    @reports = Report.paginate(:order => 'created_at DESC',
+                               :page  => params[:page],
+                               :per_page => REPORTS_PER_PAGE)
 
     respond_to do |format|
       format.html
       format.xml  { render :xml => @reports }
     end
-    rescue ActiveRecord::StatementInvalid
-      flash[:error] = "There is a problem with your query."
-      @reports = Report.paginate(:order => 'created_at DESC',
-                                 :page  => params[:page],
-                                 :per_page => REPORTS_PER_PAGE)
   end
 
   def filter
     params[:search] ||= {}
-
-    params[:search][:order] ||= :descend_by_upvotes # +++ should be diff up - down
-    params[:search][:timeframe] ||= 'hour'
-    params[:search][:upvotes_gte] ||= 1 # ??? what's this?
+    params[:search][:order]       ||= :descend_by_upvotes # +++ should be diff up - down
+    params[:search][:timeframe]   ||= 'hour' 
+    params[:search][:upvotes_gte] ||= 1 # upvotes must be greater than or equal to 1
 
     @search = Report.search(params[:search])
     @reports = @search.paginate(:page => params[:page])

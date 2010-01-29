@@ -8,8 +8,9 @@
   reported to the
   <strong>right people</strong>.
 
-= render :partial => 'search'
 = render :partial => 'report', :collection => @reports
+
+= will_paginate @reports
 
 - content_for :sidebar do
   - unless logged_in?
