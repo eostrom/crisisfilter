@@ -7,15 +7,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.root :controller => 'reports'
 
-  map.resources :reports, {
-    :collection => {
-      :filter => :get,
-      :refresh => :post
-    }, :member => {
-      :upvote => :put,
-      :downvote => :put
-    }
-  }
+  map.resources :reports, :only => [:index], :member => { :upvote => :put, :downvote => :put }
 
   # The priority is based upon order of creation: first created -> highest priority.
 
