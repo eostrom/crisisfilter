@@ -30,7 +30,7 @@ class ReportsController < ApplicationController
     message = "upvoted: #{@report.content}"
     respond_to do |format|
       format.html { flash[:notice] = message; redirect_to reports_path }
-      format.js   { render(:update){ |page| page.replace "report_#{@report.id}", :partial => @report } }
+      format.js   { render :action => "update" } #update.js.rjs
     end
   end
 
@@ -39,7 +39,7 @@ class ReportsController < ApplicationController
     message = "downvoted: #{@report.content}"
     respond_to do |format|
       format.html { flash[:notice] = message; redirect_to reports_path }
-      format.js   { render(:update){ |page| page.replace "report_#{@report.id}", :partial => @report } }
+      format.js   { render :action => "update" } #update.js.rjs
     end
   end
 
