@@ -1,12 +1,21 @@
 - @title = 'Locate Crises'
 
 - content_for :header_text do
-  Earthquake victims in Haiti are reaching out for help through social media.
   Help get
   %strong
     vital situations
   reported to the
   <strong>right people</strong>.
+
+#filter
+  - form_for @search do |f|
+    = f.text_field :content_like, :size => 50
+    = image_submit_tag 'btn_filter_results.gif', :alt => 'Filter Results'    
+#sorting
+  Sort by
+  = order @search, :by => :created_at, :as => 'date'
+  |
+  = order @search, :by => :upvotes, :as => 'votes'
 
 = render :partial => 'report', :collection => @reports
 
