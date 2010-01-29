@@ -12,7 +12,8 @@ class ReportsController < ApplicationController
     params[:search]                ||= {}
     params[:search][:content_like] ||= "Haiti"
     params[:search][:order]        ||= :descend_by_upvotes
-        
+    
+    # Explicit declaration of searched fields so that users can't hack the search    
     @search  = Report.search(:content_like => params[:search][:content_like],
                              :order        => params[:search][:order])
     @reports = @search.paginate(:page => params[:page],
@@ -26,14 +27,20 @@ class ReportsController < ApplicationController
 
   def upvote
     @report.increment!(:upvotes)
-    flash[:notice] = "upvoted: #{@report.content}"
-    redirect_to reports_path
+    message = "upvoted: #{@report.content}"
+    respond_to do |format|
+      format.html { flash[:notice] = message; redirect_to reports_path }
+      format.js   { render(:update){ |page| page.replace "report_#{@report.id}", :partial => @report } }
+    end
   end
 
   def downvote
     @report.increment!(:downvotes)
-    flash[:notice] = "downvoted: #{@report.content}"
-    redirect_to reports_path
+    message = "downvoted: #{@report.content}"
+    respond_to do |format|
+      format.html { flash[:notice] = message; redirect_to reports_path }
+      format.js   { render(:update){ |page| page.replace "report_#{@report.id}", :partial => @report } }
+    end
   end
 
   private
