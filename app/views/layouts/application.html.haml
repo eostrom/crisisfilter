@@ -11,11 +11,6 @@
   %body
     #container
       #header
-        %ul#nav
-          %li
-            = link_to 'Locate Crises', reports_path, :class => ('selected' if request[:action] == 'index')
-          %li
-            = link_to 'View Crises', filter_reports_path, :class => ('selected' if request[:action] == 'filter')
         %a#logo{ :href => "/" }
           %img{ :src => "/images/logo.gif", :alt => "CrisisFilter.org - One click could save a life." }
         %h1= yield(:header_text)
@@ -34,6 +29,7 @@
         %h2
           Why this site?
         %p
+          Earthquake victims in Haiti are reaching out for help through social media.
           This site was built to separate the vital requests for urgent help from the other posts about the term "haiti". The volume of data on this tip is so large that it takes an army of people to go through it and locate these vital posts.
         %h2
           Links
