@@ -1,1 +1,2 @@
+@report.reload # need this to update the counter_cache
 page.replace "report_#{@report.id}", :partial => @report
