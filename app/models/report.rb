@@ -21,6 +21,9 @@ require 'dynamapper/geolocate.rb'
 class Report < ActiveRecord::Base
 
   attr_accessible []
+  
+  has_many :downvotes, :dependent => :destroy
+  has_many :upvotes,   :dependent => :destroy
 
   named_scope :the_latest, :order => 'created_at DESC', :limit => 1
 
@@ -42,6 +45,8 @@ class Report < ActiveRecord::Base
     # machine-local times with the Haiti-local timestamps
     { :conditions => ['created_at BETWEEN ? AND ?', start_time, end_time] }
   }
+  
+  @per_page = 20
 
   after_create :geocode_content
 
