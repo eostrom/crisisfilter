@@ -10,13 +10,5 @@ class ReportsControllerTest < ActionController::TestCase
     assert_response :success
     assert_not_nil assigns(:reports)
   end
-
-  test "should get filter" do
-    Factory.create(:report, :upvotes => 1)
-
-    get :filter
-
-    assert_response :success
-    assert_not_nil assigns(:reports)
-  end
+  
 end
