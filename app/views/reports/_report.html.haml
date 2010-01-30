@@ -1,11 +1,11 @@
 .update{:id => "report_#{report.id}"}
   .actions
-    - form_remote_tag :url => upvote_report_path(report), :method => :put do
+    - form_remote_tag :url => up_report_votes_path(report) do
       = image_submit_tag('btn_report_crisis.gif', :alt => 'Report Crisis')
     .notacrisis
-      = link_to_remote('Not a crisis', :url=> downvote_report_path(report), :method => :put)
+      = link_to_remote('Not a crisis', :url=> down_report_votes_path(report))
     .votes
-      = "#{report.upvotes} upvotes, #{report.downvotes} downvotes"
+      = "#{pluralize report.upvotes_counter, "upvote"}, #{pluralize report.downvotes_counter, "downvote"}"
 
 
   %img{:src => report.user_profile_image_url, :style => "overflow:auto;" }
