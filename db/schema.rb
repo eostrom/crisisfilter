@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100127040545) do
+ActiveRecord::Schema.define(:version => 20100129235010) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -41,6 +41,8 @@ ActiveRecord::Schema.define(:version => 20100127040545) do
     t.string   "geotag_source"
     t.integer  "views"
     t.integer  "downvotes",              :default => 0
+    t.integer  "upvotes_counter"
+    t.integer  "downvotes_counter"
   end
 
   create_table "sessions", :force => true do |t|
@@ -81,6 +83,14 @@ ActiveRecord::Schema.define(:version => 20100127040545) do
     t.datetime "current_login_at"
     t.string   "last_login_ip"
     t.string   "current_login_ip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "votes", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "report_id"
+    t.string   "type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
